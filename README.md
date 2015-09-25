@@ -3,7 +3,7 @@
 ## Install
 
 ```
-$ npm install -g git+https://<your-username>:<password>@bitbucket.org/mbaggio/eve.git#master
+$ npm install eve
 ```
 
 ## File limit
