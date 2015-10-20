@@ -1,6 +1,6 @@
 {
   "name": "eve",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Eve command line tools",
   "bin": {
     "eve": "./lib/eve.js"
