@@ -1,6 +1,6 @@
 {
   "name": "eve",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "Eve command line tools",
   "bin": {
     "eve": "./lib/eve.js"
@@ -13,7 +13,7 @@
     "ets": "^1.0.2",
     "exorcist": "~0.1.6",
     "express": "~4.9.6",
-    "node-sass": "~2.0.1",
+    "node-sass": "~3.4.2",
     "node-watch": "~0.3.4",
     "uglify-js": "~2.4.16"
   }
