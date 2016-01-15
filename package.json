@@ -15,6 +15,7 @@
     "express": "~4.9.6",
     "node-sass": "~3.4.2",
     "node-watch": "~0.3.4",
-    "uglify-js": "~2.4.16"
+    "uglify-js": "~2.4.16",
+    "extended-fs": "^0.3.3"
   }
 }
