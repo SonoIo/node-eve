@@ -33,5 +33,8 @@
     { "path": "./bower_components/translate-utils/lib/translate.js", "options": { "expose": "translate" } },
     { "path": "./bower_components/page-utils/lib/Page.js", "options": { "expose": "page" } },
     { "path": "./bower_components/settings-utils/lib/Settings.js", "options": { "expose": "settings" } }
-  ]
+  ],
+  "eve-configs-developement": {},
+  "eve-configs-production": {},
+  "eve-configs": {}
 }
