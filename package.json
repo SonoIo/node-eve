@@ -1,24 +1,25 @@
 {
   "name": "node-eve",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Eve command line tools",
   "bin": {
     "eve": "./lib/eve.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SonoIo/node-eve.git"
+    "url": "https://github.com/SonoIo/node-eve"
   },
   "keywords": [
     "eve",
     "command",
     "browserify",
     "client",
-    "cli"
+    "cli",
+    "build"
   ],
   "contributors": [{
     "name": "Matteo Baggio",
-    "email" : "scocciatore@gmail.com"
+    "email" : "matteo.baggio@gmail.com"
   },{
     "name": "Michele Belluco",
     "email" : "michele@belluco.info"
