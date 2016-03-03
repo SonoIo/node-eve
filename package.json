@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Eve command line tools",
   "bin": {
     "eve": "./lib/eve.js"
@@ -17,15 +17,19 @@
     "cli",
     "build"
   ],
-  "contributors": [{
-    "name": "Matteo Baggio",
-    "email" : "matteo.baggio@gmail.com"
-  },{
-    "name": "Michele Belluco",
-    "email" : "michele@belluco.info"
-  }],
+  "contributors": [
+    {
+      "name": "Matteo Baggio",
+      "email": "matteo.baggio@gmail.com"
+    },
+    {
+      "name": "Michele Belluco",
+      "email": "michele@belluco.info"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
+    "async": "^1.5.2",
     "brfs": "~1.3.0",
     "browserify": "~8.1.3",
     "colors": "~1.0.3",
@@ -33,11 +37,11 @@
     "ets": "^1.0.2",
     "exorcist": "~0.1.6",
     "express": "~4.9.6",
+    "extended-fs": "^0.3.3",
     "jscrambler": "^0.7.5",
     "node-sass": "~3.4.2",
     "node-watch": "~0.3.4",
     "uglify-js": "~2.4.16",
-    "extended-fs": "^0.3.3",
     "underscore": "^1.8.3",
     "unzip": "^0.1.11"
   }
