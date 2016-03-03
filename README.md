@@ -82,7 +82,7 @@ $ eve extract -d ./myapp/ -o ./myapp/file.json
 Generate file for translations strings. File oupts are `po`, `json` or `txt`. More informations read the documentation of [ets] (https://github.com/vash15/extract-translate-string).
 
 
-### eve prepare <section>
+### eve prepare < section >
 
 ```
 $ eve prepare components
