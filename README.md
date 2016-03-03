@@ -15,12 +15,12 @@ $ npm install -g node-eve
 
 	Commands:
 
-		init  [name]                    Crea il template di una app
+		init  [name]                   Crea il template di una app
 		build [options] [type] [unit]  Compila l'applicazione
 		start [options]                Esegue l'applicazione
-		test  [options] <unit>          Testa l'applicazione
+		test  [options] <unit>         Testa l'applicazione
 		extract [options]              Estrae le stringhe dall'applicazione e le restituisce in un file per la traduzione
-
+		prepare <section>              Util for prepare a section
 	Options:
 
 		-h, --help     output usage information
@@ -80,6 +80,14 @@ $ eve extract -d ./myapp/ -o ./myapp/file.json
 ```
 
 Generate file for translations strings. File oupts are `po`, `json` or `txt`. More informations read the documentation of [ets] (https://github.com/vash15/extract-translate-string).
+
+
+### eve prepare <section>
+
+```
+$ eve prepare components
+```
+Search for eve-components in package.json, the dependencies list installed by bower
 
 
 ## Packege.json of your app
