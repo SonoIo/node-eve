@@ -1,7 +1,7 @@
 {
   "name": "eve",
   "version": "1.0.7",
-  "description": "Eve command line tools",
+  "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
   },
