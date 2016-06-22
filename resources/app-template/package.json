@@ -1,0 +1,40 @@
+{
+  "name": "{{APP_NAME}}",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "",
+  "main": "./lib/app.js",
+  "scripts": {
+    "start": "eve start"
+  },
+  "eve-components": [
+    { "path": "./bower_components/pantarhei/PantaRhei.js", "options": { "expose": "pantarhei" } },
+    { "path": "./bower_components/jquery/dist/jquery.js", "options": { "expose": "jquery" } },
+    { "path": "./bower_components/moment/moment.js", "options": { "expose": "moment" } },
+    { "path": "./bower_components/moment/locale/it.js", "options": { "expose": "moment-it_IT" } },
+    { "path": "./bower_components/moment/locale/en-gb.js", "options": { "expose": "moment-en_EN" } },
+    { "path": "./bower_components/underscore/underscore.js", "options": { "expose": "underscore" } },
+    { "path": "./bower_components/underscore.string/dist/underscore.string.js", "options": { "expose": "underscore.string" } },
+    { "path": "./bower_components/backbone/backbone.js", "options": { "expose": "backbone" } },
+    { "path": "./bower_components/backbone.pubsub/lib/pubsub.js", "options": { "expose": "pubsub" } },
+    { "path": "./bower_components/backbone.viewstack/lib/viewstack.js", "options": { "expose": "viewstack" } },
+    { "path": "./bower_components/backbone.babysitter/lib/backbone.babysitter.js", "options": { "expose": "backbone.babysitter" } },
+    { "path": "./bower_components/backbone.touch/backbone.touch.js", "options": { "expose": "backbone.touch" } },
+    { "path": "./bower_components/backbone.basicauth/backbone.basicauth.js", "options": { "expose": "backbone.basicauth" } },
+    { "path": "./bower_components/device-utils/lib/device.js", "options": { "expose": "device-utils" } },
+    { "path": "./bower_components/keyboard.js/lib/keyboard.js", "options": { "expose": "keyboard" } },
+    { "path": "./bower_components/validator-js/validator.js", "options": { "expose": "validator" } },
+    { "path": "./bower_components/logentries/product/le.js", "options": { "expose": "logentries" } },
+    { "path": "./bower_components/async/lib/async.js", "options": { "expose": "async" } },
+    { "path": "./bower_components/network-utils/lib/Network.js", "options": { "expose": "network" } },
+    { "path": "./bower_components/cache-utils/lib/Cache.js", "options": { "expose": "cache" } },
+    { "path": "./bower_components/context-utils/lib/context.js", "options": { "expose": "context" } },
+    { "path": "./bower_components/translate-utils/lib/translate.js", "options": { "expose": "translate" } },
+    { "path": "./bower_components/page-utils/lib/Page.js", "options": { "expose": "page" } },
+    { "path": "./bower_components/settings-utils/lib/Settings.js", "options": { "expose": "settings" } }
+  ],
+  "eve-configs-developement": {},
+  "eve-configs-production": {},
+  "eve-configs": {}
+}
