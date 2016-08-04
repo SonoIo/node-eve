@@ -111,6 +111,19 @@ Identify the language of the source code. Possible values: `js`, `es6` (default 
 
 Check the version of eve required by the project.
 
+### eve-watchify
+
+The configuration for watchify. For more information see [watchify](https://github.com/substack/watchify).
+Defaults:
+
+```
+	{
+		delay: 500,
+		ignoreWatch: [ 'bundle.js', 'styles.css', 'package.json', '**/styles/**', '**/node_modules/**' ],
+		poll: false
+	}
+```
+
 ### eve-configs-developement
 
 Punt into object the variables for developement mode.
@@ -122,7 +135,6 @@ Punt into object the variables for production mode.
 ### eve-configs
 
 The object is generated based on the compilation mode (`development` or `production`). Into your app require this object for read the variables.
-
 
 ## Tips & Tricks
 
