@@ -1,6 +1,10 @@
 
 # Release notes
 
+## 2.2.1
+
+- Bug fix unit test
+
 ## 2.2.0
 
 - Recompilation is much faster! Integrate `watchify` modules for recompile.
