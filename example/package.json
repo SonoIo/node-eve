@@ -1,0 +1,21 @@
+{
+    "name": "example",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "",
+    "main": "./lib/app.js",
+    "scripts": {
+        "start": "node ../lib/eve build"
+    },
+    "browserify-shim": [],
+    "dependencies": {},
+    "eve-version": "2.2.3",
+    "eve-language": "es6",
+    "eve-build-date": "2017-3-31",
+    "eve-configs-development": {},
+    "eve-configs-production": {},
+    "eve-configs": {
+        "env": "development"
+    }
+}

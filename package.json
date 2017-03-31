@@ -44,6 +44,7 @@
     "exorcist": "~0.1.6",
     "express": "~4.9.6",
     "extended-fs": "^0.3.3",
+    "factor-bundle": "^2.5.0",
     "jscrambler": "^0.7.5",
     "node-sass": "~3.8.0",
     "node-underscorify": "0.0.14",
