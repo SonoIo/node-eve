@@ -5,3 +5,6 @@ bower_components
 *bundle.js
 style.css
 style.css.map
+.components.bundle.js
+.components.js
+*.map
