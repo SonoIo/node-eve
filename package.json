@@ -47,6 +47,7 @@
     "extended-fs": "^0.3.3",
     "factor-bundle": "^2.5.0",
     "jscrambler": "^1.1.4",
+    "junk": "^2.1.0",
     "node-sass": "^4.5.2",
     "node-underscorify": "0.0.14",
     "node-watch": "^0.5.2",
