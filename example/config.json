@@ -6,6 +6,7 @@
     "author": "",
     "license": "",
     "env": "developer",
-    "build-date": "2017-4-26",
-    "API_KEY": "PERSONAL_KEY_FOR_DEV"
+    "build-date": "2017-04-28",
+    "API_KEY": "PERSONAL_KEY_FOR_DEV",
+    "build-date-time": "2017-04-28 17:43:11"
 }
