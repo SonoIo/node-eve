@@ -15,12 +15,12 @@ $ npm install -g node-eve
 
 	Commands:
 
-		init  [name]                   Crea il template di una app
-		build [options] [type] [unit]  Compila l'applicazione
-		start [options]                Esegue l'applicazione
-		test  [options] <unit>         Testa l'applicazione
-		extract [options]              Estrae le stringhe dall'applicazione e le restituisce in un file per la traduzione
-		prepare <section>              Util for prepare a section
+		init  [name]                    Crea il template di una app
+		build [options] [type] [config] Compila l'applicazione
+		start [options] [config]        Esegue l'applicazione
+		test  [options] <unit>          Testa l'applicazione
+		extract [options]               Estrae le stringhe dall'applicazione e le restituisce in un file per la traduzione
+		prepare <section>               Util for prepare a section
 	Options:
 
 		-h, --help     output usage information
@@ -37,7 +37,7 @@ $ eve init myapp
 Initialize an application structure.
 
 
-### eve build [type] [unit]
+### eve build [type] [config]
 
 ```
 $ eve build      // Alias of ...

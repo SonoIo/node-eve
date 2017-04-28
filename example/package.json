@@ -7,6 +7,7 @@
     "main": "./lib/app.js",
     "scripts": {
         "start": "node ../lib/eve start",
+        "dev": "node ../lib/eve build dev",
         "dist": "node ../lib/eve build dist",
         "pub": "node ../lib/eve build pub"
     },
@@ -14,10 +15,11 @@
     "dependencies": {},
     "eve-version": "2.2.3",
     "eve-language": "es6",
-    "eve-build-date": "2017-4-7",
+    "eve-build-date": "2017-4-26",
     "eve-configs-development": {},
     "eve-configs-production": {},
     "eve-configs": {
-        "env": "production"
+        "env": "development",
+        "TEST_VAR": "package.json"
     }
 }
