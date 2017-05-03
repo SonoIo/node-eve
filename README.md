@@ -2,6 +2,10 @@
 
 Eve is a super simple command line tool for create HTML5 applications. It compiles into a single bundle JS library and module with Browseryfy.
 
+
+http://blog.dekstroza.io/ulimit-shenanigans-on-osx-el-capitan/
+
+
 ## Install
 
 ```
