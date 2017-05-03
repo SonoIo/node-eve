@@ -1,0 +1,12 @@
+{
+    "TEST_VAR": "ALWAYS",
+    "name": "example",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "",
+    "env": "developer",
+    "build-date": "2017-04-28",
+    "API_KEY": "PERSONAL_KEY_FOR_DEV",
+    "build-date-time": "2017-04-28 18:01:08"
+}

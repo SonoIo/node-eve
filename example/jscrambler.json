@@ -1,0 +1,58 @@
+{
+  "keys": {
+    "accessKey": "C765FAE169698F4138D7BC5C215C41B9DAF686B3",
+    "secretKey": "389698F07ED186B14BFEB104C6FBC760B7166376"
+  },
+  "applicationId": "58e61c88b57c260011260874",
+  "params": [
+    {
+      "name": "whitespaceRemoval"
+    },
+    {
+      "name": "identifiersRenaming",
+      "options": {
+        "mode": "SAFEST"
+      }
+    },
+    {
+      "name": "duplicateLiteralsRemoval"
+    },
+    {
+      "name": "functionReordering"
+    },
+    {
+      "name": "dotToBracketNotation"
+    },
+    {
+      "name": "functionOutlining"
+    },
+    {
+      "name": "selfDefending"
+    },
+    {
+      "name": "booleanToAnything"
+    },
+    {
+      "name": "propertyKeysReordering"
+    },
+    {
+      "name": "propertyKeysObfuscation"
+    }
+  ],
+  "areSubscribersOrdered": false,
+  "applicationTypes": {
+    "webBrowserApp": false,
+    "desktopApp": false,
+    "serverApp": false,
+    "hybridMobileApp": true,
+    "javascriptNativeApp": false,
+    "html5GameApp": false
+  },
+  "languageSpecifications": {
+    "es5": true,
+    "es6": true,
+    "es7": false
+  },
+  "useRecommendedOrder": false,
+  "sourceMaps": false
+}
