@@ -1,5 +1,8 @@
 # Release notes
 
+## 2.3.1
+- Add missing module
+
 ## 2.3.0
 
 - eve configurations have been moved to separate files.
