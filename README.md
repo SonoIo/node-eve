@@ -19,12 +19,12 @@ $ npm install -g node-eve
 
 	Commands:
 
-		init  [name]                    Crea il template di una app
-		build [options] [type] [config] Compila l'applicazione
-		start [options] [config]        Esegue l'applicazione
-		test  [options] <unit>          Testa l'applicazione
-		extract [options]               Estrae le stringhe dall'applicazione e le restituisce in un file per la traduzione
-		prepare <section>               Util for prepare a section
+		init  [name]                    Initialize an application structure
+		build [options] [type] [config] Build app width type
+		start [options] [config]        Build an app in develop mode and start webserver
+		test  [options] <unit>          Build and start webserver for test
+		extract [options]               Extract all strings for translation
+
 	Options:
 
 		-h, --help     output usage information
@@ -48,9 +48,14 @@ $ eve build      // Alias of ...
 $ eve build dev  // Compile application of type development. Also provide source map file.
 $ eve build dist // Compile application of type production. The code is minified.
 $ eve build pub  // Compile application of type production. The code is minified and, optionally, obfuscated with jScramble.
+
+// Specify a custom configuration file
+
+$ eve build pub --config config-custom.json
+
 ```
 
-### eve start
+### eve start [options] [config]
 
 ```
 $ eve start
@@ -68,6 +73,11 @@ Also it starts a web server, so as to allow the application display in browser. 
 
 ```
 $ eve start -p 5001
+
+// Specify a custom configuration file
+
+$ eve start --config config-custom.json
+
 ```
 
 
@@ -97,13 +107,14 @@ Generate file for translations strings. File oupts are `po`, `json` or `txt`. Mo
 	"license": "",
 	"main": "./lib/app.js",
 	"scripts": {
-		"start": "eve start"
+		"start": "eve start",
+		"dist": "eve build dist"
+		"pub": "eve build pub",
+		"pre": "eve build pub --config config-pre-production.json"
 	},
 	"eve-language": "es6",
-	"eve-version": "2.0.0",
-	"eve-configs-developement": {},
-	"eve-configs-production": {},
-	"eve-configs": {}
+	"eve-version": "2.3.0",
+	"eve-build-date": "2017-4-26"
 }
 ```
 
@@ -128,60 +139,34 @@ Defaults:
 	}
 ```
 
-### eve-configs-developement
+### config-developement.json file
 
 Punt into object the variables for developement mode.
 
-### eve-configs-production
+### config-production.json file
 
 Punt into object the variables for production mode.
 
-### eve-configs
+### config.json file
 
 The object is generated based on the compilation mode (`development` or `production`). Into your app require this object for read the variables.
+
+### .everc file
+
+This is a file configuration for eve.
+
+Params:
+
+- `editor`: this field indicates the editor that will open when the user clicks on the notification.
+
+```
+{
+	"editor": "atom"
+}
+```
 
 ## Tips & Tricks
 
 ### File limit
 
 If `EMFILE` file error is triggered use the command `ulimit -n 2048` to fix it.
-
-### Set environment variables on Windows
-
-To set environment variables in Windows use the tool from ***System in Control Panel*** (or by typing `environment` into the search box in start menu). For more details read this discussion on [Stackoverflow](http://stackoverflow.com/a/9250168).
-
-### Set environment variables on Linux or Mac
-
-
-```
-`nano ~/.profile`
-
-export JSCRAMBLER_ACCESSKEY=<MY KEY>
-export JSCRAMBLER_SECRETKEY=<MY SECRET>
-```
-
-
-
-## LICENSE
-
-The MIT License (MIT)
-
-Copyright (c) 2015 - 2016
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.

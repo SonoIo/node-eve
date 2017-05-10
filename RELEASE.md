@@ -1,5 +1,17 @@
-
 # Release notes
+
+## 2.3.1
+- Add missing module
+
+## 2.3.0
+
+- eve configurations have been moved to separate files.
+- New param `--config` for build a javascript.
+- Bugfix for build scss width `pub` mode.
+- Upgrade jscrambler.
+- Create a eve config file `.everc`.
+- Developed a simple example.
+
 
 ## 2.2.1
 
