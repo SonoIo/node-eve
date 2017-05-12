@@ -13,7 +13,7 @@
     },
     "browserify-shim": [],
     "dependencies": {},
-    "eve-version": "2.2.3",
+    "eve-version": "2.3.2",
     "eve-language": "es6",
     "eve-build-date": "2017-4-26",
     "eve-configs-development": {},
