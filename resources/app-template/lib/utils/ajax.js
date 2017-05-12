@@ -1,12 +1,14 @@
+import $ from "jquery";
+import _ from "underscore";
 
-var $ = require('jquery');
-var _ = require('underscore');
-var __ = require('translate');
-
-var ajax = module.exports = function ajax(url, data, done) {
+let ajax = function ajax(url, data, options, done) {
 	if (typeof data === 'function') {
 		done = data;
 		data = undefined;
+	}
+	if ( typeof options === 'function' ){
+		done    = options;
+		options =  {};
 	}
 
 	if (!url)
@@ -17,13 +19,13 @@ var ajax = module.exports = function ajax(url, data, done) {
 	if (data)
 		method = 'POST';
 
-	var options = {
+	options = _.defaults(options||{}, {
 		dataType: 'json',
 		type: method,
 		data: data
-	};
+	});
 
-	$.ajax(url, options)
+	return $.ajax(url, options)
 		.done(function (data, textStatus, jqXHR) {
 			done(null, data);
 		})
@@ -47,3 +49,4 @@ ajax.setup = function setup() {
 	$.ajaxSetup.apply($, arguments);
 };
 
+export default ajax;

@@ -6,12 +6,11 @@
   "license": "",
   "main": "./lib/app.js",
   "scripts": {
-    "start": "eve start"
+    "start": "eve start",
+	"dist": "eve build dist",
+    "pub": "eve build pub"
   },
   "browserify-shim": {},
   "eve-language": "es6",
-  "eve-version": "2.0.0",
-  "eve-configs-developement": {},
-  "eve-configs-production": {},
-  "eve-configs": {}
+  "eve-version": "2.3.2",
 }

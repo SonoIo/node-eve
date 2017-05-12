@@ -1,78 +1,130 @@
-var pkg = require('../package.json');
+import Application from './utils/Application';
 
-// Globals
-global.env = {
-	APP_ENV: 'development' // 'production'
-};
+// Utils
+import Backbone from 'backbone';
 
-// Backbone
-Backbone.$ = $;
+// Controllers
+import HomeController from './controllers/HomeController';
 
-if (global.env.APP_ENV === 'development') {
-	var devMessage = '      _                                  _                    ' + '\n' +
-					 '   __| | _____   __  _ __ ___   ___   __| | ___    ___  _ __  ' + '\n' +
-					 '  / _` |/ _ \\ \\ / / | \'_ ` _ \\ / _ \\ / _` |/ _ \\  / _ \\| \'_ \\ ' + '\n' +
-					 ' | (_| |  __/\\ V /  | | | | | | (_) | (_| |  __/ | (_) | | | |' + '\n' +
-					 '  \\__,_|\\___| \\_/   |_| |_| |_|\\___/ \\__,_|\\___|  \\___/|_| |_|' + '\n' +
-					 '                                                              ' + '\n';
-	console.log(devMessage);
+// Collections
+// import Posts from './collections/Posts';
+
+// Views
+import TabView from './views/components/TabView';
+
+class App extends Application {
+
+	//
+	// Events
+	//
+
+	onBeforeBoot(context, page) {
+		console.log('Application: before boot');
+
+	}
+
+	onInstallLibraries(context, page){
+		console.log("Application: install libraries");
+		// Add external library
+		// page.use(PayPal.middleware());
+	}
+
+	onAfterBoot(context, page) {
+		console.log('Application: after boot');
+		// Collections
+		// context.collections.posts = new Posts();
+
+		// Initialize new middleware. Ex. OneSignal
+		// page.use((context, next)=>{
+		// 	if (window.plugins && window.plugins.OneSignal) {
+		// 		const iosSettings = {
+		// 			kOSSettingsKeyAutoPrompt: false,
+		// 			kOSSettingsKeyInAppLaunchURL: false
+		// 		};
+		// 		window.plugins.OneSignal.startInit(global.env.ONE_SIGNAL_APP_KEY, global.env.GOOGLE_PROJECT_NUMBER)
+		// 			.iOSSettings(iosSettings)
+		// 			.inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.None) // None, InAppAlert, and Notification
+		// 			.handleNotificationReceived(function(jsonData) { })
+		// 			.handleNotificationOpened(function(jsonData) { })
+		// 			.endInit();
+		// 	}
+		// 	return next();
+		// });
+
+	}
+
+	onReady(context, page) {
+
+		// Adding all routes
+
+		page.url('*',
+			// this.tabsMiddleware,
+			this.initStackMiddleware
+		);
+
+		page.url('', this.navigate('home', { trigger: true }));
+
+		page.url('home',
+			this.clearTab('home'),
+			this.navigateTab('home'),
+			HomeController.openHomeMiddleware
+		);
+
+	}
+
+	//
+	// Utilities
+	//
+
+	initStackMiddleware(context, next) {
+		context.viewstack.initStack();
+		return next();
+	}
+
+	//
+	// Tabs
+	//
+
+	// Initialize tabs view
+	// tabsMiddleware(context, next) {
+	// 	if (context.tabs) return next();
+	// 	let tabView = context.tabs = new TabView({
+	// 		tabs: [
+	// 			{ route: 'home', label: __('Home'),    masterDetail: false },
+	// 			{ route: 'account', label: __('My account'), masterDetail: false }
+	// 		]
+	// 	});
+	// 	context.viewstack.pushView(tabView);
+	// 	return next();
+	// }
+
+	// Clear tab stack
+	// clearTab(tab) {
+	// 	return (context, next) => {
+	// 		context.tabs.clear(tab);
+	// 		return next();
+	// 	};
+	// }
+
+	// Navigate to specific tab
+	// navigateTab(tab, options) {
+	// 	return (context, next) => {
+	// 		context.tabs.navigate(tab, options);
+	// 		return next();
+	// 	};
+	// }
+
 }
 
-// Translations
-var translations;
-var fs        = require('fs');
-var translate = require('translate');
-
-try {
-	translations = {
-		'default': {
-			'it_IT': JSON.parse(fs.readFileSync('locales/it_IT/default.json', 'utf8')),
-			'en_EN': JSON.parse(fs.readFileSync('locales/en_EN/default.json', 'utf8'))
+let app = new App({
+	translations: {
+		default: {
+			it: require('../locales/it/default.json'),
+			en: require('../locales/en/default.json')
 		},
-		'errors': {
-			'it_IT': JSON.parse(fs.readFileSync('locales/it_IT/errors.json', 'utf8')),
-			'en_EN': JSON.parse(fs.readFileSync('locales/en_EN/errors.json', 'utf8'))
+		error: {
+			it: require('../locales/it/error.json'),
+			en: require('../locales/en/error.json')
 		}
-	};
-}
-catch (err) {
-	throw new Error('Failed while parsing locales');
-}
-
-translate.setTranslations(translations);
-translate.setLocale('it_IT');
-require('moment-it_IT');
-global.__  = translate.__;
-global.__n = translate.__n;
-
-// Libraries
-var Page      = require('page');
-var Device    = require('device-utils');
-var Cache     = require('cache');
-var PubSub    = require('pubsub');
-var Settings  = require('settings');
-var ViewStack = require('viewstack');
-var Network   = require('network');
-
-// Page
-var page = new Page();
-
-page.use(Device.middleware());
-page.use(Cache.middleware());
-page.use(PubSub.middleware());
-page.use(Settings.middleware());
-page.use(Network.middleware({
-	backbone: Backbone
-}));
-page.use(ViewStack.middleware({ el: "#application" }));
-
-// Routes
-var pages = require('./controllers/pages');
-
-page.url({ url: '', name: 'home' },
-	pages.home
-);
-
-page.start();
-
-
+	}
+});
