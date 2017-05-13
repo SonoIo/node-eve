@@ -10,7 +10,7 @@ import HomeController from './controllers/HomeController';
 // import Posts from './collections/Posts';
 
 // Views
-import TabView from './views/components/TabView';
+// import TabView from './views/components/TabView';
 
 class App extends Application {
 
@@ -65,8 +65,8 @@ class App extends Application {
 		page.url('', this.navigate('home', { trigger: true }));
 
 		page.url('home',
-			this.clearTab('home'),
-			this.navigateTab('home'),
+			// this.clearTab('home'),
+			// this.navigateTab('home'),
 			HomeController.openHomeMiddleware
 		);
 
