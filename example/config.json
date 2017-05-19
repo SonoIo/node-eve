@@ -5,8 +5,8 @@
     "description": "",
     "author": "",
     "license": "",
-    "env": "production",
-    "build-date": "2017-05-11",
-    "API_KEY": "KEY_FOR_PRODUCTION",
-    "build-date-time": "2017-05-11 11:32:31"
+    "env": "developer",
+    "build-date": "2017-05-19",
+    "API_KEY": "PERSONAL_KEY_FOR_DEV",
+    "build-date-time": "2017-05-19 17:26:30"
 }
