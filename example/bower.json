@@ -13,7 +13,8 @@
     "tests"
   ],
   "dependencies": {
-	  "jquery": "^3.0.0",
-	  "underscore": "^1.8.3"
+    "jquery": "^3.0.0",
+    "underscore": "^1.8.3",
+    "device-utils": "^1.0.18"
   }
 }

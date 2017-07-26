@@ -1,5 +1,9 @@
 # Release notes
 
+## 2.4.0
+- Introduced OptimizeJs after compile and minified in dist or pub mode.
+- Improved BabelJS width new transforms.
+
 ## 2.3.1
 - Add missing module
 
