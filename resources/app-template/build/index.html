@@ -6,18 +6,243 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="format-detection" content="telephone=no">
-	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+	<!-- Note: http://stackoverflow.com/a/38410379 -->
+	<meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: *;">
 
 	<meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
 
 	<title>{{APP_NAME}}</title>
-	<link rel="stylesheet" href="assets/css/style.css">
+
+	<style type="text/css">
+
+	/*#boot-placeholder {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: #fff;
+		z-index: 90000;
+	}
+	#boot-placeholder .boot-placeholder-navigation {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		height: 130px;
+		padding: 0 20px;
+		padding-top: 20px;
+		border-bottom: 1px solid #f3f3f6;
+	}
+	#boot-placeholder .boot-placeholder-logo-wrapper {
+		height: 44px;
+		padding: 4px 20px;
+		box-sizing: border-box;
+	}
+	#boot-placeholder .boot-placeholder-logo {
+		height: 36px;
+		display: block;
+		margin: 0 auto;
+	}
+	#boot-placeholder .boot-placeholder-search {
+		position: relative;
+		background-color: #f3f3f6;
+		height: 36px;
+		margin-top: 6px;
+		padding-left: 36px;
+		line-height: 36px;
+	}
+	#boot-placeholder .icon-search {
+		position: absolute;
+		top: 0;
+		left: 0;
+		font-size: 22px;
+		width: 36px;
+		height: 36px;
+		line-height: 36px;
+		color: #c1bec6;
+		text-align: center;
+	}
+	#boot-placeholder .icon-search::before {
+		vertical-align: -5px;
+	}
+	#boot-placeholder .boot-placeholder-content {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+	#boot-placeholder .boot-placeholder-tabbar {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 49px;
+		border-top: 1px solid #c1bec7;
+		background-color: #f3f3f6;
+	}
+
+	#boot-placeholder.android .boot-placeholder-navigation {
+		padding-top: 0;
+	}
+
+	#boot-placeholder.tablet .boot-placeholder-search {
+		display: none;
+	}
+	#boot-placeholder .boot-placeholder-navigation {
+		height: 88px;
+	}*/
+
+	</style>
+
+	<script type="text/javascript">
+		;(function() {
+
+		window.__start = new Date().getTime();
+		window.__nativeLog = {
+			log: console.log,
+			warn: console.warn,
+			error: console.error
+		};
+
+		// Sequenza di boot:
+		// DOMContentLoaded: verifica se è un tablet e un dispositivo android
+		// onLoad: carica cordova.js e il bundle.js
+		// onDeviceReady: rimuove lo splashscreen e mostra il placeholder
+
+		document.addEventListener('DOMContentLoaded', function() {
+			if (isAndroid()) {
+				document.getElementById('boot-placeholder').className += ' android';
+			}
+			if (isTablet()) {
+				document.getElementById('boot-placeholder').className += ' tablet';
+			}
+		});
+
+		window.addEventListener('load', boot, false);
+
+		function deviceReady() {
+			window.__deviceReady = new Date().getTime() - window.__start;
+			// Nasconde lo splashscreen di Cordova
+			if (navigator.splashscreen) {
+				navigator.splashscreen.hide();
+			}
+		}
+
+		function loadCordova() {
+			loadScript('cordova.js');
+		}
+
+		function loadBundle() {
+			loadScript('assets/js/commons.bundle.js');
+			loadScript('assets/js/bundle.js');
+		}
+
+		function boot() {
+			window.__end = new Date().getTime() - window.__start;
+			document.addEventListener('deviceready', deviceReady, false);
+			loadCordova();
+			if (!isMobileApp()) {
+				loadBundle();
+			}
+		}
+
+		function isMobileApp() {
+			return typeof window.cordova !== 'undefined' || typeof window.phonegap !== 'undefined';
+		}
+
+		function isAndroid() {
+			return navigator.userAgent.match(/Android/i);
+		}
+
+		function getInchOfScreen() {
+			// var devicePixelRatio = window.devicePixelRatio || 1;
+			// Get the pixels per inch horizontal
+			// var ppi = Device.getPPI() * devicePixelRatio;
+			var ppi = 160; // approximation
+
+			var viewport = {
+				width:  window.innerWidth,
+				height: window.innerHeight
+			}
+
+			// Get screen width and height
+			var width  = viewport.width;
+			var height = viewport.height;
+
+			// Use some Pythagoras magic
+			var square_w = width * width;
+			var square_h = height * height;
+
+			// Get the diagonal in pixels
+			var diagonal_p = Math.sqrt( square_w + square_h );
+
+			// Divide that through the pixels per inch and you got the diagonal.
+			return diagonal_p / ppi;
+		}
+
+		function isTablet() {
+			return getInchOfScreen() >= 6.5;
+		}
+
+		function loadScript(src) {
+			var tagScript = document.createElement('script');
+			tagScript.type = 'text/javascript';
+			tagScript.src = src;
+			tagScript.async = false;
+			document.body.appendChild(tagScript);
+		}
+
+		})();
+
+		// Impedisce al body di scrollare in fase di boot.
+		// Questi eventi vengono staccati nel removeBootPlaceholder()
+		document.addEventListener('touchstart', stopPropagation);
+		document.addEventListener('touchend', stopPropagation);
+		document.addEventListener('touchmove', stopPropagation);
+
+		function stopPropagation(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		}
+
+		// Funzione pubblica utilizzata da alcune pagine dell'app
+		function removeBootPlaceholder() {
+			if (window.AppBoot)
+				return true;
+			setTimeout(function() {
+				requestAnimationFrame(function () {
+					window.AppBoot = true;
+					var node = document.getElementById('boot-placeholder');
+					if ( node ){
+						node.parentNode.removeChild(node);
+					}
+					document.removeEventListener('touchstart', stopPropagation);
+					document.removeEventListener('touchend', stopPropagation);
+					document.removeEventListener('touchmove', stopPropagation);
+				});
+			}, 300);
+		}
+	</script>
 </head>
 <body>
-<div id="application" class="viewport">
+	<div id="boot-placeholder">
+		<!-- <div class="boot-placeholder-navigation">
+			<div class="boot-placeholder-logo-wrapper">
+				<img class="boot-placeholder-logo" src="assets/img/logo-full@2x.png" />
+			</div>
+			<div class="boot-placeholder-search"></div>
+		</div>
+		<div class="boot-placeholder-content">
+			<div class="loading"></div>
+		</div>
+		<div class="boot-placeholder-tabbar"></div> -->
+	</div>
+	<div id="application" class="viewport">
 
-</div>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="assets/js/bundle.js"></script>
+	</div>
+	<link rel="stylesheet" href="assets/css/style.css">
 </body>
 </html>

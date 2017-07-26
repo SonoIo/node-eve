@@ -107,16 +107,6 @@ var AppCollection = module.exports = Backbone.Collection.extend({
 				return done(err);
 			}
 		);
-	},
-
-	getRejectedModels: function getRejectedModels() {
-		var result;
-		result = this.filter(function (aModel) {
-			return aModel.hasRejectedPaths();
-		});
-		return result;
 	}
 
 });
-
-

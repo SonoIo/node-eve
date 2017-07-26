@@ -1,0 +1,60 @@
+//
+// Fonts
+//
+$regular-font: 'arial';
+$bold-font: 'arialbold';
+$italic-font: 'arialitalic';
+
+$icon-font: 'icons';
+
+$extra-small-font-size: 11px;
+$small-font-size: 12px;
+$default-font-size: 14px;
+$medium-font-size: 16px;
+$big-font-size: 22px;
+$button-font-size: 16px;
+$icon-font-size: 26px;
+$small-icon-font-size: 22px;
+$extra-small-icon-font-size: 14px;
+
+//
+// Colors
+//
+$primary-color: purple;
+
+$text-color: #333;
+$soft-text-color: #CCC;
+$hard-text-color: #000;
+$negate-text-color: #FFF;
+$important-text-color: red;
+$success-text-color: green;
+$error-text-color: red;
+
+$background-color: #FFF;
+$soft-background-color: #FFF;
+$hard-background-color: #FFF;
+$dark-background-color: #FFF;
+$overlay-background-color: rgba(0, 0, 0, 0.5);
+
+$overlay-color: rgba(0,0,0,0.27);
+
+
+//
+// Height & Width
+//
+
+$ios-status-bar-height: 20px;
+$nav-height: 44px;
+$tab-height: 49px;
+$statusbar-height: 20px;
+$button-height: 44px;
+$button-width: 44px;
+
+$document-padding: 20px;
+
+
+
+//
+// Durations
+//
+$animation-duration: 300ms;

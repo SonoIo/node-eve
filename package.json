@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "2.3.1",
+  "version": "2.3.5",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
@@ -30,6 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.3.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-es2016": "^6.22.0",
@@ -52,7 +53,7 @@
     "node-sass": "^4.5.2",
     "node-underscorify": "0.0.14",
     "node-watch": "^0.5.2",
-    "uglify-js": "^3.0.1",
+    "uglify-js": "^3.0.3",
     "underscore": "^1.8.3",
     "underscore.string": "^3.3.4",
     "unzip": "^0.1.11",
