@@ -30,7 +30,7 @@
 	  "backbone.pubsub": "^1.0.0",
       "backbone.uikit": "master",
 	  "context-utils": "^2.0.2",
-	  "device-utils": "^1.0.17",
+	  "device-utils": "^1.0.21",
 	  "network-utils": "~2.3.0",
 	  "cache-utils": "~1.0.3",
 	  "translate-utils": "~1.0.1",
