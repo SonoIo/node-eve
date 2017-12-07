@@ -1,5 +1,8 @@
 # Release notes
 
+## 2.5.2
+- upgrade app template
+
 ## 2.5.1
 - integrate l10ns on eve build
 - add new optional param for auto translate source
