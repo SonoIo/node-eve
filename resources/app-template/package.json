@@ -8,15 +8,17 @@
   "scripts": {
     "start": "eve start",
 	"dist": "eve build dist",
-    "pub": "eve build pub"
+    "pub": "eve build pub",
+	"translate-watch": "eve translate watch",
+    "translate": "eve translate interface"
   },
   "dependencies": {},
   "devDependencies": {
-    "node-eve": "^2.3.4"
+    "node-eve": "^2.5.1"
   },
   "browserify-shim": {},
   "eve-language": "es6",
-  "eve-version": "2.3.4",
+  "eve-version": "2.5.1",
   "eve-babel-plugins": {
 	  "builtin-extend": {
 		  "globals": ["Error"],

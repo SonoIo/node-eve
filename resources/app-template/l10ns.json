@@ -1,0 +1,28 @@
+{
+  "defaultProject": "{{APP_NAME}}",
+  "projects": {
+    "{{APP_NAME}}": {
+      "timezones": [
+        "Europe/Rome"
+      ],
+      "currencies": [
+        "EUR"
+      ],
+      "interface": {
+        "autoOpen": true,
+        "port": 3001
+      },
+      "languages": {
+        "en-US": "English(US)"
+      },
+      "defaultLanguage": "en-US",
+      "programmingLanguage": "javascript",
+      "store": "localizations//",
+      "output": "localizations//output",
+      "source": [
+		  "lib/**",
+		  "templates/**"
+	  ]
+    }
+  }
+}

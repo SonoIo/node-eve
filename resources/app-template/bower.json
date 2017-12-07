@@ -26,7 +26,7 @@
 	  "backbone": "^1.3.3",
 	  "backbone.touch": "https://github.com/vash15/backbone.touch.git",
 	  "backbone.basicauth": "https://github.com/SonoIo/backbone.basicauth.git#master",
-	  "backbone.viewstack": "~2.3.0",
+	  "backbone.viewstack": "~2.3.1",
 	  "backbone.pubsub": "^1.0.0",
       "backbone.uikit": "master",
 	  "context-utils": "^2.0.2",
@@ -36,7 +36,7 @@
 	  "translate-utils": "~1.0.1",
 	  "page-utils": "~2.1.0",
 	  "settings-utils": "~1.2.0",
-      "backbone.uikit": "master"
+      "accounting": "dotnetCarpenter/accounting.js#~0.4.2"
   },
     "devDependencies": {
         "mocha": "~1.21.4",

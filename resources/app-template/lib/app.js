@@ -116,15 +116,4 @@ class App extends Application {
 
 }
 
-let app = new App({
-	translations: {
-		default: {
-			it: require('../locales/it/default.json'),
-			en: require('../locales/en/default.json')
-		},
-		error: {
-			it: require('../locales/it/error.json'),
-			en: require('../locales/en/error.json')
-		}
-	}
-});
+let app = new App();
