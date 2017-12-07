@@ -14,11 +14,11 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "node-eve": "^2.5.1"
+    "node-eve": "^2.5.2"
   },
   "browserify-shim": {},
   "eve-language": "es6",
-  "eve-version": "2.5.1",
+  "eve-version": "2.5.2",
   "eve-babel-plugins": {
 	  "builtin-extend": {
 		  "globals": ["Error"],

@@ -2,6 +2,7 @@ import _ from "underscore";
 import $ from "jquery";
 import context from "context-utils";
 import { PageView, IosBarView,  } from "backbone.uikit";
+import {l} from "../../utils/index";
 
 export default class HomePage extends PageView {
 
@@ -19,7 +20,7 @@ export default class HomePage extends PageView {
 			state: state,
 			addClass: 'back-bar',
 			left: '<i class="icon-close js-close"></i>',
-			center: $('<span class="title"></span>').text(__('HomePage')),
+			center: $('<span class="title"></span>').text(l('HOME_PAGE->TITLE')),
 			popViewOnBackButton: false
 		});
 		this.addSubView('navigationBarView', navigationBarView);

@@ -1,5 +1,6 @@
 import $ from "jquery";
 import _ from "underscore";
+import {l} from "./index";
 
 let ajax = function ajax(url, data, options, done) {
 	if (typeof data === 'function') {
@@ -38,9 +39,9 @@ let ajax = function ajax(url, data, options, done) {
 			else if (errorThrown && errorThrown != '')
 				err = new Error(errorThrown);
 			else if (jqXHR.status == 0)
-				err = new Error(__n('errors', 'Internet disconnected'));
+				err = new Error(l('Internet disconnected'));
 			else
-				err = new Error(__n('errors', 'Unknonwn error'));
+				err = new Error(l('Unknonwn error'));
 			done(err);
 		});
 };

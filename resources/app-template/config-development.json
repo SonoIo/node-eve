@@ -1,3 +1,4 @@
 {
-    "env": "development"
+    "env": "development",
+	"DEFAULT_LOCALE": "en-US"
 }

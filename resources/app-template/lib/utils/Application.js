@@ -8,10 +8,10 @@ import Settings from 'settings-utils';
 import Search from 'search-utils';
 import Page from 'page-utils';
 import Network from 'network-utils';
-import translate from 'translate-utils';
 import PubSub from 'backbone.pubsub';
 import Viewstack from 'backbone.viewstack';
 import Performance from "./Performance";
+import {l} from "./index";
 
 export default class Application {
 
@@ -59,13 +59,7 @@ export default class Application {
 			window._$   = $;
 		}
 
-		// Translate
-		translate.setTranslations(this.options.translations);
-		translate.setLocale(this.options.defaultLanguage);
-
-		global.__  = translate.__;
-		global.__n = translate.__n;
-
+		
 		// Context vars
 		context.collections = {};
 		context.models = {};
