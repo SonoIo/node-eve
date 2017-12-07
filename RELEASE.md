@@ -1,5 +1,22 @@
 # Release notes
 
+## 2.5.1
+- integrate l10ns on eve build
+- add new optional param for auto translate source
+
+## 2.5.0
+- Wrapper for l10ns package
+- Implement the watcher for l10ns update and compile when file is compiled
+
+## 2.4.3
+- Added to the translation list the main file
+
+## 2.4.2
+- Added CORS on static server
+
+## 2.4.1
+- Enhanced suppor to test
+
 ## 2.4.0
 - Introduced OptimizeJs after compile and minified in dist or pub mode.
 - Improved BabelJS width new transforms.
