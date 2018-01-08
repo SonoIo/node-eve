@@ -1,5 +1,8 @@
 # Release notes
 
+## 2.5.6
+- Added a watch on localizations files to format translations
+
 ## 2.5.5
 - Change translation format to remove GIT conflict
 
