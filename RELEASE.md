@@ -1,7 +1,10 @@
 # Release notes
 
 ## 2.5.3
-- Bugfix for l10ns watch 
+- Upgrade l10ns to version 
+
+## 2.5.3
+- Bugfix for l10ns watch
 
 ## 2.5.2
 - upgrade app template

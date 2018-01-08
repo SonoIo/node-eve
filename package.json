@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
@@ -34,6 +34,7 @@
     "babel-plugin-inline-json-import": "^0.2.1",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -52,7 +53,7 @@
     "factor-bundle": "^2.5.0",
     "jscrambler": "^1.1.4",
     "junk": "^2.1.0",
-    "l10ns": "^2.4.11",
+    "l10ns": "^2.4.19",
     "node-notifier": "^5.1.2",
     "node-sass": "^4.5.2",
     "node-underscorify": "0.0.14",
