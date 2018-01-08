@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
@@ -53,7 +53,7 @@
     "factor-bundle": "^2.5.0",
     "jscrambler": "^1.1.4",
     "junk": "^2.1.0",
-    "l10ns": "^2.4.19",
+    "l10ns": "^2.4.11",
     "node-notifier": "^5.1.2",
     "node-sass": "^4.5.2",
     "node-underscorify": "0.0.14",

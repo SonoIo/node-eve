@@ -1,7 +1,10 @@
 # Release notes
 
-## 2.5.3
-- Upgrade l10ns to version 
+## 2.5.5
+- Change translation format to remove GIT conflict
+
+## 2.5.4
+- Upgrade l10ns to version
 
 ## 2.5.3
 - Bugfix for l10ns watch
