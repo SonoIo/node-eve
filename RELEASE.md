@@ -1,4 +1,9 @@
 # Release notes
+## 2.5.7
+- Upgrade l10ns for compability node 8
+- Change link pull requrst of library debowerify for compability node 8
+
+## 2.5.6
 
 ## 2.5.5
 - Change translation format to remove GIT conflict

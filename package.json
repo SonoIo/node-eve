@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "2.5.5",
+  "version": "2.5.7",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
@@ -45,7 +45,7 @@
     "browserify-shim": "^3.8.14",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
-    "debowerify": "github:eugeneware/debowerify#pull/85/head",
+    "debowerify": "https://github.com/romainl/debowerify.git",
     "ets": "^1.0.3",
     "exorcist": "^0.4.0",
     "express": "^4.15.2",
@@ -53,9 +53,9 @@
     "factor-bundle": "^2.5.0",
     "jscrambler": "^1.1.4",
     "junk": "^2.1.0",
-    "l10ns": "^2.4.11",
+    "l10ns": "^2.4.19",
     "node-notifier": "^5.1.2",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.7.2",
     "node-underscorify": "0.0.14",
     "node-watch": "^0.5.5",
     "optimize-js": "^1.0.3",
