@@ -1,4 +1,7 @@
 # Release notes
+## 2.5.8
+- Bugfix *l10ns* library error that does not correctly download the *unicode-cldr* dependency
+
 ## 2.5.7
 - Upgrade l10ns for compability node 8
 - Change link pull requrst of library debowerify for compability node 8

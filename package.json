@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
@@ -43,9 +43,10 @@
     "babelify": "^7.3.0",
     "browserify": "~14.4.0",
     "browserify-shim": "^3.8.14",
+    "cldr-data": "^32.0.1",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
-    "debowerify": "https://github.com/romainl/debowerify.git",
+    "debowerify": "https://github.com/romainl/debowerify.git#master",
     "ets": "^1.0.3",
     "exorcist": "^0.4.0",
     "express": "^4.15.2",
