@@ -1,6 +1,7 @@
 import _ from 'underscore';
 import $ from 'jquery';
 import Backbone from 'backbone';
+import BackboneTouch from 'backbone.touch';
 import context from 'context-utils';
 import Device from 'device-utils';
 import Cache from 'cache-utils';
@@ -59,7 +60,7 @@ export default class Application {
 			window._$   = $;
 		}
 
-		
+
 		// Context vars
 		context.collections = {};
 		context.models = {};
@@ -148,7 +149,7 @@ export default class Application {
 			}, false);
 
 			// Keyboard
-			if (window.cordova && window.cordova.plugins.Keyboard) {
+			if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
 				window.cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
 				window.cordova.plugins.Keyboard.disableScroll(true);
 				context.keyboard = {
