@@ -7,10 +7,12 @@
   "main": "./lib/app.js",
   "scripts": {
     "start": "eve start",
-	"dist": "eve build dist",
+    "dist": "eve build dist",
     "pub": "eve build pub",
-	"translate-watch": "eve translate watch",
-    "translate": "eve translate interface"
+    "translate": "eve translate interface",
+    "translate-watch": "eve translate watch",
+    "translate-update": "eve l10ns update",
+    "translate-compile": "eve l10ns compile"
   },
   "dependencies": {},
   "devDependencies": {
