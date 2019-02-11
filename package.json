@@ -56,7 +56,7 @@
     "junk": "^2.1.0",
     "l10ns": "^2.4.19",
     "node-notifier": "^5.1.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.4",
     "node-underscorify": "0.0.14",
     "node-watch": "^0.5.5",
     "optimize-js": "^1.0.3",
