@@ -1,0 +1,333 @@
+// COMMON STYLES
+
+%button {
+	@include text-truncate(1);
+	@extend %button-text-style;
+	display: block;
+	padding: 0 17px;
+	height: 48px;
+	line-height: 48px;
+	width: 100%;
+	border: none;
+	border-radius: $button-border-radius;
+	box-sizing: border-box;
+	background: none;
+	text-align: center;
+	text-transform: uppercase;
+	-webkit-appearance: none;
+	appearance: none;
+	&.inline {
+		width: auto;
+		display: inline-block;
+	}
+}
+
+%centered-button {
+	width: calc(100% - 55px * 2); // 55px + 20px = 75px
+	margin: auto;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		width: calc(100% - 20px * 2); // 20px + 20px = 40px
+	}
+}
+
+%social-login-button {
+	@extend %centered-button;
+	position: relative;
+	display: block;
+	height: 48px;
+	max-width: 234px;
+
+	// Button icon
+	&:before {
+		content: " ";
+		display: block;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	// Button text
+	span {
+		@extend %social-button-text-style;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		border: none;
+		overflow: hidden;
+		text-overflow: clip;
+		white-space: nowrap;
+	}
+
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		height: 41px;
+	}
+}
+
+// BUTTON TYPES
+
+// Bottone azione principale
+%primary-button, .primary-button {
+	@extend %button;
+	@extend %centered-button;
+	color: $negate-text-color;
+	background-color: $primary-color;
+	border-radius: $button-border-radius;
+
+	&.touch-active, &:active {
+		background-color: lighten($primary-color, 20);
+	}
+	&.disabled, &.disabled.touch-active, &:disabled {
+		background-color: $medium-background-color;
+	}
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		height: 41px;
+		line-height: 41px;
+	}
+}
+%small-primary-button, .small-primary-button {
+	@extend %primary-button;
+	@extend %small-button-text-style;
+	display: inline-block;
+	width: auto;
+	height: 36px;
+	line-height: 36px;
+	// font-size: $small-button-font-size;
+	border-radius: $small-button-border-radius;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		height: 32px;
+		line-height: 32px;
+	}
+}
+
+// Bottone secondario
+%secondary-button, .secondary-button {
+	@extend %primary-button;
+	background-color: $hard-background-color;
+
+	&.touch-active, &:active {
+		background-color: lighten($hard-text-color, 20);
+	}
+}
+%small-secondary-button, .small-secondary-button {
+	@extend %small-primary-button;
+	background-color: $hard-background-color;
+
+	&.touch-active, &:active {
+		background-color: lighten($hard-text-color, 20);
+	}
+}
+
+// Bottone senza sfondo e senza bordi con il testo grande
+%clear-button, .clear-button {
+	@extend %button;
+	background-color: transparent;
+	color: $hard-text-color;
+
+	&.touch-active {
+		color: lighten($hard-text-color, 10);
+	}
+	&.disabled, &.disabled.touch-active, &:disabled {
+		color: $soft-text-color;
+	}
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		height: 41px;
+		line-height: 41px;
+	}
+}
+
+//  Bottone senza sfondo e senza bordi con il testo piccolo
+%small-clear-button, .small-clear-button {
+	@extend %clear-button;
+	@extend %small-button-text-style;
+	text-transform: none;
+
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		height: 36px;
+		line-height: 36px;
+	}
+}
+
+%quantity-button, .quantity-button {
+	@extend %button;
+	@extend %big-button-text-style;
+	overflow: hidden;
+	position: relative;
+	width: auto;
+	display: inline-block;
+	border-radius: 15px;
+	background-color: $important-text-color;
+	color: $negate-text-color;
+	height: 26px;
+	line-height: 26px;
+	&.touch-active {
+		color: lighten($important-text-color, 10);
+	}
+	&.add:after {
+		@extend %icon-style;
+		@extend %fitContainer;
+		content: '\63';
+		background-color: $primary-color;
+	}
+}
+
+// Box button
+%box-button, .box-button {
+	@extend %button;
+	@extend %extra-big-button-text-style;
+	background-color: $soft-background-color;
+	height: 56px;
+	line-height: 56px;
+	box-shadow: $box-shadow;
+	display: inline-block;
+	width: auto;
+	text-align: center;
+	transition: background-color $animation-duration;
+	&.touch-active, &.active {
+		color: $negate-text-color;
+		background-color: $important-text-color;
+		box-shadow: none;
+	}
+	&.disabled, &.disabled.touch-active, &:disabled {
+		color: $negate-text-color;
+		background-color: $medium-background-color;
+		box-shadow: none;
+	}
+}
+%multi-row-box-button, .box-button.multi-row {
+	@extend %box-button;
+	@extend %small-button-text-style;
+	line-height: normal;
+	white-space: normal;
+	overflow: hidden;
+	text-overflow: clip;
+	// padding-top: 11px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 0;
+}
+
+
+// Bottone facebook social login
+.facebook-button {
+	@extend %social-login-button;
+	max-width: 100%;
+	padding: 0 10px;
+	box-sizing: border-box;
+	background-color: $facebook-background-color;
+	color: #FFF;
+	border-radius: 4px;
+
+	// Button icon
+	&:before {
+		height: 48px;
+		width: 40px;
+		margin-left: -$fine-spacing;
+		background-image: url("../img/facebook-logo-white.svg");
+		background-size: 24px 24px;
+
+		@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+			height: 41px;
+		}
+	}
+
+	// Button text
+	span {
+		left: 20px;
+		right: 0;
+		height: 20px;
+		margin: auto;
+		padding: 0;
+		letter-spacing: inherit;
+		text-align: center;
+	}
+	&.touch-active {
+		opacity: 0.9;
+	}
+}
+
+// Bottone twitter social login
+.twitter-button {
+	@extend %social-login-button;
+}
+
+// Bottone google social login
+.google-button {
+	@extend %social-login-button;
+	background-color: $google-background-color;
+	color: rgba(0, 0, 0, 0.54);
+	border-radius: 2px;
+	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+
+	// Button icon
+	&:before {
+		position: absolute;
+		top: 11px;
+		left: 11px;
+		height: 18px;
+		width: 18px;
+		background-image: url("../img/logo_googleg_48dp.svg");
+		background-size: 18px 18px;
+	}
+	// Button text
+	span {
+		left: 50px;
+		right: 9px;
+		height: 16px;
+		margin: auto;
+		font-family: "Roboto";
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 14px;
+		letter-spacing: .22px;
+		text-align: left;
+	}
+	&.touch-active {
+		background-color: $google-background-color-pressed;
+	}
+}
+
+// Separatore
+.separator {
+	width: 95px;
+	height: 1px;
+	margin: auto;
+	background-color: $border-color;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+%icon-button,
+.icon-button {
+	@extend %button;
+	@extend %icon-style;
+	position: relative;
+	display: inline-block;
+	height: 44px;
+	line-height: 44px;
+	width: auto;
+	overflow: hidden;
+	border-radius: 0;
+	padding: 0;
+	vertical-align: middle;
+	text-transform: none !important;
+	text-overflow: clip !important;
+	&:after {
+		position: absolute;
+		content: '';
+		top: 0;
+		right: -10px;
+		bottom: 0;
+		left: -10px;
+	}
+	&.touch-active {
+		color: $primary-color;
+	}
+}
+
+%primary-icon-button,
+.primary-icon-button {
+	@extend %icon-button;
+	color: $primary-color;
+	&.touch-active {
+		color: ligthen($primary-color, 20);
+	}
+}

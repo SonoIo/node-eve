@@ -1,5 +1,18 @@
 import _ from "underscore";
+import { t } from "typy";
 import { Model } from "backbone";
+
+Model.prototype.safeGet = function(path, type) {
+	let method;
+	switch (type) {
+		case 'string':  method = 'safeString';  break;
+		case 'number':  method = 'safeNumber';  break;
+		case 'boolean': method = 'safeBoolean'; break;
+		case 'object':
+		default:        method = 'safeObject';  break;
+	}
+	return t(this.attributes, path)[method];
+};
 
 export default class AppModel extends Model {
 

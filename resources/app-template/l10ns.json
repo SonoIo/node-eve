@@ -13,16 +13,16 @@
         "port": 3001
       },
       "languages": {
-        "en-US": "English(US)"
+        "en": "English"
       },
-      "defaultLanguage": "en-US",
+      "defaultLanguage": "en",
       "programmingLanguage": "javascript",
       "store": "localizations//",
       "output": "localizations//output",
       "source": [
-		  "lib/**",
-		  "templates/**"
-	  ]
+          "lib/**",
+          "templates/**"
+      ]
     }
   }
 }

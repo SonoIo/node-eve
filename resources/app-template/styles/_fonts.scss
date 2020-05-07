@@ -1,0 +1,179 @@
+//
+// Normal text
+//
+
+%default-text-style, .test-default-text-style {
+	font-family: 'Roboto';
+	font-size: $default-font-size;
+	font-weight: $normal-weight;
+	color: $text-color;
+}
+%soft-text-style, .test-soft-text-style {
+	@extend %default-text-style;
+	font-size: 12px;
+	font-weight: $medium-weight;
+	text-transform: uppercase;
+	color: $soft-text-color;
+}
+%loading-text-style, .test-loading-text-style {
+	@extend %default-text-style;
+	font-size: 14;
+	font-weight: bold;
+	color: $hard-text-color;
+}
+%notification-title-text-style {
+	@extend %default-text-style;
+}
+%tab-bar-text-style, .test-tab-bar-text-style {
+	@extend %default-text-style;
+	color: $negate-text-color;
+	font-size: 12px;
+}
+%tab-bar-badge-text-style, .tab-bar-badge-text-style {
+	@extend %default-text-style;
+	font-size: 10px;
+	font-weight: $bold-weight;
+	padding: 1px 5px 2px 5px;
+	min-width: 12px;
+	border-radius: 15px;
+	text-align: center;
+	color: $negate-text-color;
+	background-color: $dark-background-color;
+}
+
+//
+// Titles
+//
+
+%extra-big-title-text-style, .test-extra-big-title-text-style {
+	@extend %default-text-style;
+	font-size: 34px;
+	font-weight: $bold-weight;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 24px;
+	}
+}
+%big-title-text-style, .test-big-title-text-style {
+	@extend %extra-big-title-text-style;
+	font-size: 24px;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 20px;
+	}
+}
+%medium-title-text-style, .test-medium-title-text-style {
+	@extend %default-text-style;
+	font-size: 17px;
+	font-weight: $medium-weight;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 15px;
+	}
+}
+%small-title-text-style, .test-small-title-text-style {
+	@extend %medium-title-text-style;
+	font-size: 15px;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 15px;
+	}
+}
+%tiny-title-text-style, .test-tiny-title-text-style {
+	@extend %default-text-style;
+	font-size: 12px;
+	font-weight: $bold-weight;
+	color: $hard-text-color;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 10px;
+	}
+}
+%subtitle-text-style, .test-subtitle-text-style {
+	@extend %default-text-style;
+	font-size: 12px;
+	font-weight: $bold-weight;
+	text-transform: uppercase;
+}
+%small-subtitle-text-style, .test-small-subtitle-text-style {
+	@extend %subtitle-text-style;
+	font-size: 10px;
+	color: $hard-text-color;
+}
+
+
+//
+// Buttons
+//
+
+%button-text-style {
+	@extend %default-text-style;
+	font-size: 14px;
+	font-weight: $medium-weight;
+	text-transform: uppercase;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 12px;
+	}
+}
+%extra-big-button-text-style {
+	@extend %button-text-style;
+	font-size: 18px;
+}
+%big-button-text-style {
+	@extend %button-text-style;
+	font-size: 15px;
+}
+%small-button-text-style {
+	@extend %button-text-style;
+	font-size: 12px;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 10px;
+	}
+}
+%icon-style, .test-icon-style {
+	font-family: 'u2-click-and-collect';
+	font-size: 24px;
+	letter-spacing: normal;
+	text-transform: none !important;
+}
+%social-button-text-style, .test-social-button-text-style {
+	font-family: "Roboto";
+	font-size: 14px;
+	font-weight: $medium-weight;
+	letter-spacing: normal;
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		font-size: 12px;
+	}
+}
+
+//
+// Text fields
+//
+
+%text-field-text-style {
+	@extend %default-text-style;
+	text-shadow: 0px 0px 0px $text-color;
+	&.force-redraw {
+		text-shadow: none;
+	}
+}
+%disabled-text-field-text-style {
+	@extend %text-field-text-style;
+	text-shadow: 0px 0px 0px $soft-text-color;
+	color: $soft-text-color;
+}
+%label-text-style, .test-label-text-style {
+	@extend %default-text-style;
+	font-size: 14px;
+	color: $hard-text-color;
+}
+%small-label-text-style, .test-small-label-text-style {
+	@extend %default-text-style;
+	font-size: 10px;
+	color: $hard-text-color;
+}
+%placeholder-text-style {
+	@extend %default-text-style;
+	color: $soft-text-color;
+	text-shadow: 0px 0px 0px $soft-text-color;
+}
+%invalid-text-style {
+	@extend %default-text-style;
+	color: $error-text-color;
+	font-size: $small-font-size;
+}

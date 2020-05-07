@@ -6,7 +6,7 @@
   "license": "",
   "main": "./lib/app.js",
   "scripts": {
-    "start": "eve start",
+    "start": "eve start --translate",
     "dist": "eve build dist",
     "pub": "eve build pub",
     "translate": "eve translate interface",

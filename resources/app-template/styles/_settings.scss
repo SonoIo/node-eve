@@ -1,63 +1,109 @@
 //
 // Fonts
 //
-$regular-font: 'arial';
-$bold-font: 'arialbold';
-$italic-font: 'arialitalic';
-
 $icon-font: 'icons';
 
-$extra-small-font-size: 11px;
-$small-font-size: 12px;
-$default-font-size: 14px;
-$medium-font-size: 16px;
-$big-font-size: 22px;
-$button-font-size: 16px;
-$icon-font-size: 26px;
-$small-icon-font-size: 22px;
-$extra-small-icon-font-size: 14px;
+$extra-small-font-size:           10px;
+$small-font-size:                 12px;
+$default-font-size:               14px;
+$medium-font-size:                16px;
+$big-font-size:                   24px;
+$extra-big-font-size:             34px;
+
+$button-font-size:                14px;
+$small-button-font-size:          12px;
+
+$icon-font-size:                  24px;
+$small-icon-font-size:            22px;
+$extra-small-icon-font-size:      14px;
+$big-icon-font-size:              26px;
+$extra-big-icon-font-size:        30px;
+$icon-nav-bar-font-size:          25px;
+$icon-tab-bar-font-size:          24px;
+
+$normal-weight:                   normal;
+$bold-weight:                     bold;
+$medium-weight:                   500;
 
 //
 // Colors
 //
-$primary-color: purple;
 
-$text-color: #333;
-$soft-text-color: #CCC;
-$hard-text-color: #000;
-$negate-text-color: #FFF;
-$important-text-color: red;
-$success-text-color: green;
-$error-text-color: red;
+$primary-color:                   #FA4000;
+$secondary-color:                 #0A0A0A;
 
-$background-color: #FFF;
-$soft-background-color: #FFF;
-$hard-background-color: #FFF;
-$dark-background-color: #FFF;
-$overlay-background-color: rgba(0, 0, 0, 0.5);
+$text-color:                      #141414;
+$soft-text-color:                 #C2C2C2;
+$medium-text-color:               #9B9B9B;
+$hard-text-color:                 #58585A;
+$negate-text-color:               #FFF;
 
-$overlay-color: rgba(0,0,0,0.27);
+$important-text-color:            #0250AA;
+$success-text-color:              #20C34B;
+$error-text-color:                #FF2000;
 
+// $background-gradient:             linear-gradient(-218deg, #FDFBFA 0%, #F3EEEC 100%);
+$background-color:                #F6F6F6;
+$soft-background-color:           #FFFFFF;
+$medium-background-color:         #F0F0F0;
+$hard-background-color:           #58585A;
+$dark-background-color:           #141414;
+$overlay-background-color:        rgba(0, 0, 0, 0.6);
+$negate-background-color:         #000000;
+$important-background-color:      #0250AA;
+$success-background-color:        #20C34B;
+$error-background-color:          #58585A;
+
+$border-color:                    #DEDEDE;
+
+$overlay-color:                   rgba(0,0,0,0.32);
+$shadow-color:                    rgba(0,0,0,0.1);
+$box-shadow:                      0 -2px 14px $shadow-color;
+
+$facebook-background-color:       #4267b2; // #2B5C96; (colore unieuro)
+$google-background-color:         #FFFFFF;
+$google-background-color-pressed: #EEEEEE;
 
 //
 // Height & Width
 //
 
-$ios-status-bar-height: 20px;
-$nav-height: 44px;
-$tab-height: 49px;
-$statusbar-height: 20px;
-$button-height: 44px;
-$button-width: 44px;
-$toolbar-height: 44px;
-$ios-iphone-x-margin-bottom: 20px;
-$ios-iphone-x-status-bar-height: 44px;
+$ios-status-bar-height:           20px;
+$nav-height:                      85px;
+$tab-height:                      50px;
+$statusbar-height:                20px;
+$button-height:                   48px;
+$button-width:                    44px;
+$toolbar-height:                  44px;
+$ios-iphone-x-margin-bottom:      34px;
+$ios-iphone-x-status-bar-height:  44px;
 
-$document-padding: 20px;
+//
+// Spacing
+//
 
+$fine-spacing:                    5px;
+$tiny-spacing:                    10px;
+$small-spacing:                   15px;
+$default-spacing:                 20px;
+$medium-spacing:                  30px;
+$big-spacing:                     47px;
 
+$document-padding:                20px;
+$modal-padding:                   15px;
+$textarea-padding:                16px;
+$button-margin:                   23px;
+
+$border-radius:                   4px;
+$button-border-radius:            $border-radius;
+$small-button-border-radius:      18px;
+$modal-border-radius:             28px;
 
 //
 // Durations
 //
-$animation-duration: 300ms;
+
+$animation-duration:              300ms;
+$animation-transition:            ease-out !default;
+$slow-animation-duration:         600ms;
+$quick-animation-duration:        150ms;
