@@ -19,7 +19,7 @@ import ComponentsController from './controllers/ComponentsController';
 // import TabView from './views/components/TabView';
 
 // Middlewares
-import middlewares from './middlewares';
+import * as middlewares from './middlewares';
 
 class App extends Application {
 

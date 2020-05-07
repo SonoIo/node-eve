@@ -1,3 +1,4 @@
+import _ from "underscore";
 import context from "context-utils";
 
 export default class PagesController {

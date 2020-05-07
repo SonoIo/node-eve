@@ -11,6 +11,9 @@ export * from "./localizations";
 // Countries
 export * from "./countries";
 
+// Languages
+export * from "./languages";
+
 // Strip tags
 export * from "./stripTags";
 
