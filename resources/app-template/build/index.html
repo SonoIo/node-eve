@@ -99,132 +99,181 @@
 	<script type="text/javascript">
 		;(function() {
 
-		window.__start = new Date().getTime();
-		window.__nativeLog = {
-			log: console.log,
-			warn: console.warn,
-			error: console.error
-		};
+			var _openUrl = null;
 
-		// Sequenza di boot:
-		// DOMContentLoaded: verifica se è un tablet e un dispositivo android
-		// onLoad: carica cordova.js e il bundle.js
-		// onDeviceReady: rimuove lo splashscreen e mostra il placeholder
+			window.handleOpenURL = function handleOpenURL(url) {
+				_openUrl = url;
+			};
 
-		document.addEventListener('DOMContentLoaded', function() {
-			if (isAndroid()) {
-				document.getElementById('boot-placeholder').className += ' android';
-			}
-			if (isTablet()) {
-				document.getElementById('boot-placeholder').className += ' tablet';
-			}
-		});
+			window.__start = new Date().getTime();
+			window.__nativeLog = {
+				log: console.log,
+				warn: console.warn,
+				error: console.error
+			};
 
-		window.addEventListener('load', boot, false);
+			// Sequenza di boot:
+			// DOMContentLoaded: verifica se è un tablet e un dispositivo android
+			// onLoad: carica cordova.js e il bundle.js
+			// onDeviceReady: rimuove lo splashscreen e mostra il placeholder
 
-		function deviceReady() {
-			window.__deviceReady = new Date().getTime() - window.__start;
-			// Nasconde lo splashscreen di Cordova
-			if (navigator.splashscreen) {
-				navigator.splashscreen.hide();
-			}
-		}
+			document.addEventListener('DOMContentLoaded', function() {
+				window.__DOMContentLoaded = new Date().getTime() - window.__start;
 
-		function loadCordova() {
-			loadScript('cordova.js');
-		}
+				var el = document.getElementById('boot-placeholder');
 
-		function loadBundle() {
-			loadScript('assets/js/commons.bundle.js');
-			loadScript('assets/js/bundle.js');
-		}
+				var started = window.localStorage.getItem("app:started");
+				if ( typeof started !== 'string' || started !== "b|true" ){
+					el.classList.add("first-open");
+				}
 
-		function boot() {
-			window.__end = new Date().getTime() - window.__start;
-			document.addEventListener('deviceready', deviceReady, false);
-			loadCordova();
-			if (!isMobileApp()) {
+				if (isAndroid()) {
+					el.classList.add('android');
+				}
+				if (isTablet()) {
+					el.classList.add('tablet');
+				}
+			});
+
+			window.addEventListener('load', onLoad, false);
+
+			function onDeviceReady() {
+				window.__deviceReady = new Date().getTime() - window.__start;
 				loadBundle();
-			}
-		}
 
-		function isMobileApp() {
-			return typeof window.cordova !== 'undefined' || typeof window.phonegap !== 'undefined';
-		}
-
-		function isAndroid() {
-			return navigator.userAgent.match(/Android/i);
-		}
-
-		function getInchOfScreen() {
-			// var devicePixelRatio = window.devicePixelRatio || 1;
-			// Get the pixels per inch horizontal
-			// var ppi = Device.getPPI() * devicePixelRatio;
-			var ppi = 160; // approximation
-
-			var viewport = {
-				width:  window.innerWidth,
-				height: window.innerHeight
+				// Nasconde lo splashscreen di Cordova
+				if (navigator.splashscreen) {
+					navigator.splashscreen.hide();
+				}
 			}
 
-			// Get screen width and height
-			var width  = viewport.width;
-			var height = viewport.height;
+			function loadCordova(done) {
+				loadScript('cordova.js', done);
+			}
 
-			// Use some Pythagoras magic
-			var square_w = width * width;
-			var square_h = height * height;
+			function loadBundle() {
+				loadScript('assets/js/commons.bundle.js');
+				loadScript('assets/js/bundle.js', function() {
+					window.__bundleLoad = new Date().getTime() - window.__start;
+					if ( _openUrl ){
+						setTimeout(function(){
+							window.handleOpenURL(_openUrl);
+							_openUrl = null;
+						},100);
+					}
+				});
+			}
 
-			// Get the diagonal in pixels
-			var diagonal_p = Math.sqrt( square_w + square_h );
+			function onLoad() {
+				window.__end = new Date().getTime() - window.__start;
+				document.addEventListener('deviceready', onDeviceReady, false);
+				loadCordova(function(err) {
+					window.__cordovaLoad = new Date().getTime() - window.__start;
+					// Se da errore vuol dire che sono nel browser, quindi carica il bundle
+					if (err) {
+						loadBundle();
+					}
+				});
+			}
 
-			// Divide that through the pixels per inch and you got the diagonal.
-			return diagonal_p / ppi;
-		}
+			// @refg https://github.com/Modernizr/Modernizr/blob/master/feature-detects/dom/passiveeventlisteners.js
+			function passiveEventListeners() {
+				var supportsPassiveOption = false;
+				try {
+					var opts = Object.defineProperty({}, 'passive', {
+						get: function() {
+							supportsPassiveOption = true;
+						}
+					});
+					window.addEventListener('test', null, opts);
+				} catch (e) {}
+				return supportsPassiveOption;
+			}
 
-		function isTablet() {
-			return getInchOfScreen() >= 6.5;
-		}
+			function isMobileApp() {
+				return typeof window.cordova !== 'undefined' || typeof window.phonegap !== 'undefined';
+			}
 
-		function loadScript(src) {
-			var tagScript = document.createElement('script');
-			tagScript.type = 'text/javascript';
-			tagScript.src = src;
-			tagScript.async = false;
-			document.body.appendChild(tagScript);
-		}
+			function isAndroid() {
+				return navigator.userAgent.match(/Android/i);
+			}
+
+			function getInchOfScreen() {
+				// var devicePixelRatio = window.devicePixelRatio || 1;
+				// Get the pixels per inch horizontal
+				// var ppi = Device.getPPI() * devicePixelRatio;
+				var ppi = 160; // approximation
+
+				var viewport = {
+					width:  window.innerWidth,
+					height: window.innerHeight
+				}
+
+				// Get screen width and height
+				var width  = viewport.width;
+				var height = viewport.height;
+
+				// Use some Pythagoras magic
+				var square_w = width * width;
+				var square_h = height * height;
+
+				// Get the diagonal in pixels
+				var diagonal_p = Math.sqrt( square_w + square_h );
+
+				// Divide that through the pixels per inch and you got the diagonal.
+				return diagonal_p / ppi;
+			}
+
+			function isTablet() {
+				return getInchOfScreen() >= 6.5;
+			}
+
+			function loadScript(src, done) {
+				if (typeof done  !== "function") done = function(){};
+				var tagScript = document.createElement('script');
+				tagScript.type = 'text/javascript';
+				tagScript.src = src;
+				tagScript.async = false;
+				tagScript.onerror = function() {
+					done(new Error("Can't load script "+src));
+				}
+				tagScript.onload = function() {
+					done();
+				}
+				document.body.appendChild(tagScript);
+			}
+
+			// Impedisce al body di scrollare in fase di boot.
+			// Questi eventi vengono staccati nel removeBootPlaceholder()
+			document.addEventListener('touchstart', stopPropagation, passiveEventListeners() ? { passive: false } : false );
+			document.addEventListener('touchend',   stopPropagation, passiveEventListeners() ? { passive: false } : false );
+			document.addEventListener('touchmove',  stopPropagation, passiveEventListeners() ? { passive: false } : false );
+
+			function stopPropagation(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+
+			// Funzione pubblica utilizzata da alcune pagine dell'app
+			window.removeBootPlaceholder = function removeBootPlaceholder() {
+				if (window.AppBoot)
+					return true;
+				setTimeout(function() {
+					requestAnimationFrame(function () {
+						window.AppBoot = true;
+						var node = document.getElementById('boot-placeholder');
+						if (node) {
+							node.parentNode.removeChild(node);
+						}
+						document.removeEventListener('touchstart', stopPropagation, passiveEventListeners() ? { passive: false } : false );
+						document.removeEventListener('touchend',   stopPropagation, passiveEventListeners() ? { passive: false } : false );
+						document.removeEventListener('touchmove',  stopPropagation, passiveEventListeners() ? { passive: false } : false );
+					});
+				}, 300);
+			}
 
 		})();
-
-		// Impedisce al body di scrollare in fase di boot.
-		// Questi eventi vengono staccati nel removeBootPlaceholder()
-		document.addEventListener('touchstart', stopPropagation);
-		document.addEventListener('touchend', stopPropagation);
-		document.addEventListener('touchmove', stopPropagation);
-
-		function stopPropagation(e) {
-			e.preventDefault();
-			e.stopPropagation();
-			return false;
-		}
-
-		// Funzione pubblica utilizzata da alcune pagine dell'app
-		function removeBootPlaceholder() {
-			if (window.AppBoot)
-				return true;
-			setTimeout(function() {
-				requestAnimationFrame(function () {
-					window.AppBoot = true;
-					var node = document.getElementById('boot-placeholder');
-					if ( node ){
-						node.parentNode.removeChild(node);
-					}
-					document.removeEventListener('touchstart', stopPropagation);
-					document.removeEventListener('touchend', stopPropagation);
-					document.removeEventListener('touchmove', stopPropagation);
-				});
-			}, 300);
-		}
 	</script>
 </head>
 <body>
