@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "2.5.9",
+  "version": "2.5.10",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
