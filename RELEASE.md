@@ -1,12 +1,28 @@
 # Release notes
+
+## 3.0.0
+- Babel 7
+  - [@babel/plugin-proposal-class-properties](https://babeljs.io/docs/en/babel-plugin-proposal-class-properties)
+  - [@babel/plugin-proposal-export-default-from](https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from)
+  - [@babel/plugin-proposal-export-namespace-from](https://babeljs.io/docs/en/babel-plugin-proposal-export-namespace-from)
+  - [@babel/plugin-proposal-nullish-coalescing-operator](https://babeljs.io/docs/en/babel-plugin-proposal-export-namespace-from)
+  - [@babel/plugin-proposal-object-rest-spread](https://babeljs.io/docs/en/babel-plugin-proposal-object-rest-spread)
+  - [@babel/plugin-proposal-optional-chaining](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining)
+- Added generators and async/await support
+- Remove "extract translate string" (ets) package and command
+
+## 2.5.10
+- Added supprot to URL rewrite to index.html with `--urlrewrite` parameter
+
+## 2.5.9
+- Removed old libraries
+
 ## 2.5.8
 - Bugfix *l10ns* library error that does not correctly download the *unicode-cldr* dependency
 
 ## 2.5.7
 - Upgrade l10ns for compability node 8
 - Change link pull requrst of library debowerify for compability node 8
-
-## 2.5.6
 
 ## 2.5.6
 - Added a watch on localizations files to format translations

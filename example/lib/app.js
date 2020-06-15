@@ -95,3 +95,27 @@ console.log('');
 // !function (){}()
 // function runIt(fun){ fun(); }
 // runIt(function (){let foo = new Foo();foo.destroy(); });
+
+
+console.log("%cTest async/await", "color: #FFF; background: #000");
+
+class AsyncClass {	
+	async load() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve({ message: 'Secret' });
+			}, 3000);
+		});
+	}
+}
+
+const asyncClass = new AsyncClass();
+const runOnBackground = async () => {
+	let message = 'Initialized';
+	const result = await asyncClass.load();
+	message = result.message;
+	console.log("`message != 'Initialized'` ['Secret']: %s", message != 'Initialized', message); // true, 'Secret'
+};
+runOnBackground();
+
+
