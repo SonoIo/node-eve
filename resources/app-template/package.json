@@ -6,25 +6,22 @@
   "license": "",
   "main": "./lib/app.js",
   "scripts": {
-    "start": "eve start --translate",
-    "dist": "eve build dist",
-    "pub": "eve build pub",
+    "start": "npm run translate-update && npm run translate-compile && npm run dev",
+    "dev": "eve start --translate --config=config-development.json",
+    "prod": "eve start --translate --config=config-production.json",
+    "dist": "eve build dist --config=config.production.json",
     "translate": "eve translate interface",
     "translate-watch": "eve translate watch",
     "translate-update": "eve l10ns update",
-    "translate-compile": "eve l10ns compile"
+    "translate-compile": "eve l10ns compile",
+    "test": "eve test mocha",
+    "play-loading": "eve test playground/loading"
   },
   "dependencies": {},
   "devDependencies": {
-    "node-eve": "^2.5.8"
+    "node-eve": "https://github.com/SonoIo/node-eve#master"
   },
   "browserify-shim": {},
   "eve-language": "es6",
-  "eve-version": "2.5.8",
-  "eve-babel-plugins": {
-	  "builtin-extend": {
-		  "globals": ["Error"],
-		  "approximate": false
-	  }
-  }
+  "eve-version": "3.0.0"
 }

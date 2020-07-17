@@ -1,7 +1,9 @@
 //
 // Fonts
 //
+
 $icon-font: 'icons';
+$text-font: 'Roboto';
 
 $extra-small-font-size:           10px;
 $small-font-size:                 12px;
@@ -19,7 +21,7 @@ $extra-small-icon-font-size:      14px;
 $big-icon-font-size:              26px;
 $extra-big-icon-font-size:        30px;
 $icon-nav-bar-font-size:          25px;
-$icon-tab-bar-font-size:          24px;
+$icon-tab-bar-font-size:          26px;
 
 $normal-weight:                   normal;
 $bold-weight:                     bold;
@@ -29,8 +31,8 @@ $medium-weight:                   500;
 // Colors
 //
 
-$primary-color:                   #FA4000;
-$secondary-color:                 #0A0A0A;
+$primary-color:                   #000000;
+$secondary-color:                 #ffcc00;
 
 $text-color:                      #141414;
 $soft-text-color:                 #C2C2C2;
@@ -50,9 +52,10 @@ $hard-background-color:           #58585A;
 $dark-background-color:           #141414;
 $overlay-background-color:        rgba(0, 0, 0, 0.6);
 $negate-background-color:         #000000;
-$important-background-color:      #0250AA;
+$important-background-color:      $hard-background-color;
 $success-background-color:        #20C34B;
 $error-background-color:          #58585A;
+$input-background-color:          $medium-background-color;
 
 $border-color:                    #DEDEDE;
 
@@ -60,7 +63,7 @@ $overlay-color:                   rgba(0,0,0,0.32);
 $shadow-color:                    rgba(0,0,0,0.1);
 $box-shadow:                      0 -2px 14px $shadow-color;
 
-$facebook-background-color:       #4267b2; // #2B5C96; (colore unieuro)
+$facebook-background-color:       #4267b2;
 $google-background-color:         #FFFFFF;
 $google-background-color-pressed: #EEEEEE;
 
@@ -68,13 +71,13 @@ $google-background-color-pressed: #EEEEEE;
 // Height & Width
 //
 
-$ios-status-bar-height:           20px;
-$nav-height:                      85px;
+$nav-height:                      50px;
 $tab-height:                      50px;
 $statusbar-height:                20px;
 $button-height:                   48px;
 $button-width:                    44px;
 $toolbar-height:                  44px;
+$ios-status-bar-height:           20px;
 $ios-iphone-x-margin-bottom:      34px;
 $ios-iphone-x-status-bar-height:  44px;
 

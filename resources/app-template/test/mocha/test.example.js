@@ -1,4 +1,5 @@
-import Customers from "../../lib/collections/Customers";
+// Import model and collections from the main project
+// import Customers from "../../lib/collections/Customers";
 
 const assert = chai.assert;
 
@@ -21,16 +22,18 @@ describe('Customers', () => {
 	});
 
 	it('should fetch all users', (done) => {
-		const customers = new Customers();
-		customers.fetch({
-			success: () => {
-				assert.lengthOf(customers, 10, 'customers.length should be 10');
-				done();
-			},
-			error: (collection, error, options) => {
-				done(error);
-			}
-		});
+		setTimeout(() => done(), 500);
+	});
+
+	it('should use async/await', async (done) => {
+		const wait = () => {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => resolve(true), 2000);
+			});
+		};
+		const result = await wait();
+		assert.isTrue(result, 'It should have been true');
+		done(); // Remember to call done!
 	});
 
 });

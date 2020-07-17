@@ -1,0 +1,183 @@
+$tab-bar-toolbar-background-color: $soft-background-color;
+$tab-bar-toolbar-color: $hard-text-color;
+$tab-bar-toolbar-active-color: $primary-color;
+
+.tab-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: $background-color;
+	overflow: hidden;
+
+	// La struttura prevedere che sotto la tab-bar ci sia la OrderBarView,
+	// per evitare di dover gestire lo z-index con !important si è preferito
+	// non rendere toccabile il tab-contente e il tab-content-page
+	&,
+	.tab-bar-content,
+	.tab-bar-content-page {
+		pointer-events: none;
+	}
+	.ui-page,
+	.tab-bar-toolbar {
+		pointer-events: auto;
+	}
+
+	.tab-bar-toolbar {
+		overflow: hidden;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: $tab-height;
+		box-sizing: border-box;
+		background-color: $tab-bar-toolbar-background-color;
+		color: $tab-bar-toolbar-color;
+		box-shadow: 0 0 20px $shadow-color;
+		z-index: 50000 !important;
+
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-items: flex-start;
+
+		@include at-root('.iphone-x') {
+			height: $tab-height + $ios-iphone-x-margin-bottom;
+		}
+
+		transition: transform $animation-duration $animation-transition;
+	}
+	&.show-toolbar .tab-bar-toolbar {
+		transform: translateY(0);
+	}
+	&.hide-toolbar .tab-bar-toolbar {
+		transform: translateY($tab-height);
+		@include at-root('.iphone-x') {
+			// transform: translateY($tab-height + $ios-iphone-x-margin-bottom);
+			.tab-bar-toolbar-button {
+				opacity: 0;
+			}
+		}
+	}
+	&.shadow .tab-bar-toolbar {
+		box-shadow: $box-shadow;
+	}
+
+	.tab-bar-toolbar-button {
+		position: relative;
+		height: $tab-height;
+		text-align: center;
+
+		-webkit-transition: color $animation-duration;
+		transition: color $animation-duration;
+
+		padding-top: 7px;
+		box-sizing: border-box;
+
+		.tab-bar-toolbar-button-label {
+			@extend %tab-bar-text-style;
+			display: block;
+		}
+
+		&.active,
+		&.active i,
+		&.active .tab-bar-toolbar-button-label {
+			color: $tab-bar-toolbar-active-color;
+		}
+
+		i {
+			display: block;
+			font-size: $icon-tab-bar-font-size;
+		}
+
+	}
+
+
+	.tablet {
+		.tab-bar-toolbar-button {
+			-webkit-flex-basis: auto;
+			flex-basis: auto;
+		}
+	}
+
+	.tab-bar-content {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		overflow: hidden;
+	}
+	.tab-bar-content-page {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		transform: translateX(-10000px);
+		&.active {
+			transform: translateX(0);
+		}
+	}
+	.tab-bar-toolbar-button-badge {
+		position: absolute;
+		top: 4px;
+		right: calc(50% - 23px);
+		@extend %tab-bar-badge-text-style;
+	}
+
+	.viewstack {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 0;
+	}
+
+	// Solo nei dispositivi con performace elevate
+	@include at-root('.high-performance'){
+		// Hum... ho problemi, dovrei animare troppe cose per avere un effetto decente
+		// -webkit-transition: top 150ms;
+		// transition: top 150ms;
+	}
+
+}
+
+@include respond-to('tablet'){
+	.tab-bar {
+		.tab-bar-toolbar-button {
+			-webkit-flex-basis: 10%;
+			flex-basis: 10%;
+		}
+	}
+}
+
+@include respond-to('landscapeTablet'){
+	.tab-bar {
+		.tab-bar-toolbar-button {
+			.tab-bar-toolbar-cart-count{
+				right: 12px;
+			}
+		}
+	}
+}
+
+@keyframes wishlist-badge {
+	0%   { text-indent: -1.2em; }
+	32%  { text-indent: -1.2em; }
+	33%  { text-indent: -0.6em; }
+	66%  { text-indent: -0.6em; }
+	67%  { text-indent:  0em  ; }
+	100% { text-indent:  0em  ; }
+}
+
+@-webkit-keyframes wishlist-badge {
+	0%   { text-indent: -1.2em; }
+	49%  { text-indent: -1.2em; }
+	50%  { text-indent: -0.6em; }
+	99%  { text-indent: -0.6em; }
+	100% { text-indent:  0em  ; }
+}

@@ -1,0 +1,31 @@
+.ui-select-field {
+	@extend %box-text-field;
+
+	select {
+		text-align: center;
+		text-align-last: center; /* webkit */
+		border: none; // 1px solid $glitter-color;
+		background-color: $input-background-color;
+		cursor: pointer;
+	}
+
+	&:after {
+		@extend %fitContainer;
+		@extend %icon-style;
+		content: '\66';
+		top: ($box-text-field-height - $icon-font-size) / 2;
+		left: auto;
+		right: $text-field-padding;
+		// width: $icon-text-field-icon-area;
+		width: $icon-text-field-icon-width;
+		color: $medium-background-color;
+		text-align: center;
+		pointer-events: none;
+	}
+
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		&:after {
+			top: ($small-box-text-field-height - $icon-font-size) / 2;
+		}
+	}
+}

@@ -3,7 +3,7 @@
 //
 
 %default-text-style, .test-default-text-style {
-	font-family: 'Roboto';
+	font-family: $text-font;
 	font-size: $default-font-size;
 	font-weight: $normal-weight;
 	color: $text-color;
@@ -17,12 +17,19 @@
 }
 %loading-text-style, .test-loading-text-style {
 	@extend %default-text-style;
-	font-size: 14;
+	font-size: 14px;
 	font-weight: bold;
 	color: $hard-text-color;
 }
 %notification-title-text-style {
 	@extend %default-text-style;
+}
+%link-text-style, .test-link-text-style {
+	@extend %default-text-style;
+	text-decoration: underline;
+	&.touch-active, &.active {
+		color: lighten($important-text-color, 10);
+	}
 }
 %tab-bar-text-style, .test-tab-bar-text-style {
 	@extend %default-text-style;
@@ -126,13 +133,13 @@
 	}
 }
 %icon-style, .test-icon-style {
-	font-family: 'u2-click-and-collect';
+	font-family: $icon-font;
 	font-size: 24px;
 	letter-spacing: normal;
 	text-transform: none !important;
 }
 %social-button-text-style, .test-social-button-text-style {
-	font-family: "Roboto";
+	font-family: $text-font;
 	font-size: 14px;
 	font-weight: $medium-weight;
 	letter-spacing: normal;

@@ -1,71 +1,95 @@
-import _ from "underscore";
-import $ from "jquery";
-import context from "context-utils";
-import { PageView, IosBarView,  } from "backbone.uikit";
-import {l} from "../../utils/index";
+import _ from 'underscore';
+import context from 'context-utils';
+import AppPage from '../AppPage';
+import PagesController from '../../controllers/PagesController';
+import { l } from '../../utils';
 
-export default class HomePage extends PageView {
+const STATUS_LOADING = 'loading';
+const STATUS_READY = 'ready';
+
+export default class HomePage extends AppPage {
 
 	addClass() {
-		return 'home-page';
+		return 'homepage';
 	}
 
 	constructor(options) {
 		super(options);
+		const state = this.getState();
 
-		// this.template = require('../../../templates/home/home.html');
+		this.template = require('../../../templates/pages/home.html');
 
-		let state = this.getState();
-		let navigationBarView = new IosBarView({
-			state: state,
-			addClass: 'back-bar',
-			left: '<i class="icon-close js-close"></i>',
-			center: $('<span class="title"></span>').text(l('HOME_PAGE->TITLE')),
-			popViewOnBackButton: false
+		this.addEvents({
+			'click .js-alert': 'onButtonClick'
 		});
-		this.addSubView('navigationBarView', navigationBarView);
-
-		this.listenTo(navigationBarView, 'leftClick', this.onNavigationBarLeftSideClick);
 	}
 
-	getNavigationBar() {
-		return this.getSubView('navigationBarView');
-	}
-
-	getAnimationPushDuration() {
-		return 0;
-	}
+	//
+	// Events
+	//
 
 	onRender(rendered) {
+		super.onRender(rendered);
 		if (!rendered) {
-			// this.$el.html(template({ model: this.model.toJSON() }));
+			this.cache.$content.html(this.template({
+				l: l
+			}));
+			this.cache.$alertButton = this.cache.$content.find('.js-alert');
+			this.changeStatus(STATUS_LOADING);
+			setTimeout(() => {
+				this.changeStatus(STATUS_READY);
+			}, 2000);
 		}
-		if (this.model) {
-			// Filled
+	}
+
+	onNavigate() {
+		// Analytics
+		context.pubsub.trigger('analytics', 'homepage');
+	}
+
+	onEnterStatus(oldStatus, newStatus) {
+		switch (newStatus) {
+			case STATUS_LOADING:
+				this.disableButton();
+				break;
+			case STATUS_READY:
+				break;
 		}
-		else {
-			// Empty
+	}
+
+	onExitStatus(oldStatus, newStatus) {
+		switch (oldStatus) {
+			case STATUS_LOADING:
+				this.enableButton();
+				break;
+			case STATUS_READY:
+				break;
 		}
 	}
 
-	onNavigationBarLeftSideClick(e) {
-		this.trigger('close', e);
+	onButtonClick() {
+		this.showAlert();
 	}
 
-	onBeforeActivate() {
-		super.onBeforeActivate();
+	//
+	// Methods
+	//
+
+	disableButton() {
+		this.cache.$alertButton.prop('disabled', true);
 	}
 
-	onActivate(firstTime) {
-		super.onActivate(firstTime);
+	enableButton() {
+		this.cache.$alertButton.prop('disabled', false);
 	}
 
-	onBeforeDeactivate() {
-		super.onBeforeDeactivate();
-	}
-
-	onDeactivate() {
-		super.onDeactivate();
+	showAlert() {
+		if (this.status !== STATUS_READY) return;
+		PagesController.showAlert({
+			title: l('HOME_PAGE->ALERT_TITLE'),
+			message: l('HOME_PAGE->ALERT_MESSAGE'),
+			buttonName: l('HOME_PAGE->ALERT_BUTTON')
+		});
 	}
 
 }

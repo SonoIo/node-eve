@@ -1,0 +1,124 @@
+$modal-handle-height: 36px;
+
+.ui-modal {
+	& > .overlay {
+		@include animation(fadeIn, $quick-animation-duration, $animation-transition, null, both);
+		-webkit-animation-delay: $animation-duration + 50ms;
+		animation-delay: $animation-duration + 50ms;
+
+		@include at-root('.iphone') {
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+		}
+		@include at-root('.ipad') {
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+		}
+		@include at-root('.android') {
+			background-color: $overlay-background-color;
+		}
+	}
+	& > .container {
+		pointer-events: none;
+		& * {
+			pointer-events: auto;
+		}
+	}
+	& > .container > .content {
+		pointer-events: initial;
+		top: auto;
+		left: $modal-padding;
+		right: $modal-padding;
+		bottom: $modal-padding;
+		background-color: $background-color;
+		border-radius: $modal-border-radius;
+		box-shadow: $box-shadow;
+		box-sizing: border-box;
+
+		max-height: calc(100% - (2 * #{$modal-padding}));
+
+		@include at-root('.iphone') {
+			max-height: calc(100% - (2 * #{$modal-padding}) - #{$ios-status-bar-height});
+		}
+		@include at-root('.ipad') {
+			max-height: calc(100% - (2 * #{$modal-padding}) - #{$ios-status-bar-height});
+		}
+		@include at-root('.iphone-x') {
+			max-height: calc(100% - (1 * #{$modal-padding}) - #{$ios-iphone-x-status-bar-height} - #{$ios-iphone-x-margin-bottom});
+			bottom: $ios-iphone-x-margin-bottom;
+		}
+
+	}
+	& > .container > .content > .ui-base-view {
+		padding-left: $medium-spacing;
+		padding-right: $medium-spacing;
+	}
+
+	&.has-toolbar {
+		& > .container {
+			& > .content {
+				bottom: $toolbar-height;
+			}
+			& > .toolbar {
+				height: $toolbar-height;
+			}
+		}
+	}
+
+	&.pop {
+		& > .overlay {
+			opacity: 0;
+			@include animation(fadeOut, $animation-duration, $animation-transition, null, both);
+			-webkit-animation-delay: $animation-duration + 50ms;
+			animation-delay: $animation-duration + 50ms;
+		}
+		& > .container > .content {
+			
+		}
+	}
+
+	.content-page {
+		padding-top: 0;
+	}
+}
+
+//
+// Boot error modal
+//
+
+%error-modal {
+	& > .container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	& > .container > .content {
+		position: static;
+		margin: 0 auto;
+		padding: $big-spacing $document-padding;
+		text-align: center;
+		max-width: 300px;
+		@include respond-to('tablet') {
+			max-width: 600px;
+		}
+		button {
+			max-width: 200px;
+		}
+	}
+
+	.error-modal-title {
+		@extend %big-title-text-style;
+		line-height: 32px;
+		color: $text-color;
+		margin-bottom: $default-spacing;
+	}
+
+	.error-modal-message {
+		margin-bottom: $medium-spacing;
+	}
+
+	.error-modal-close-button {
+
+	}
+}

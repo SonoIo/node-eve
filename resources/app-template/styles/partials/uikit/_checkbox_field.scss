@@ -1,0 +1,119 @@
+$checkbox-width: 24px !default; // larghezza del checkbox (quadrato)
+$checkbox-height: $box-text-field-height !default; // altezza dell'elemento
+$checkbox-label-margin-top: ($checkbox-height - $checkbox-width) / 2; // spaziatura interna
+
+%checkbox {
+	// Sfondo del checkbox
+	&:before {
+		content: '';
+		position: absolute;
+		top: 44px;
+		right: 0;
+		height: $checkbox-width;
+		width: $checkbox-width;
+		margin-top: $checkbox-width / -2;
+		border: none;
+		border-radius: $border-radius;
+		box-sizing: border-box;
+		border: 1px solid $primary-color;
+		transition: background-color 0.1s;
+		transition-timing-function: ease-out;
+	}
+	// Spunta del checkbox
+	&:after {
+		content: '';
+		position: absolute;
+		top: 44px;
+		right: 0;
+		margin-top: $checkbox-width / -2;
+		height: $checkbox-width;
+		width: $checkbox-width;
+		background-color: $primary-color;
+		border-radius: 2px;
+		transform: scale(0.66);
+		opacity: 0;
+		transition: opacity 0.1s;
+		transition-timing-function: ease-out;
+	}
+}
+%active-checkbox:after {
+	opacity: 1;
+	transition-timing-function: ease-in;
+}
+%disabled-checkbox:before {
+	background-color: $soft-background-color;
+	border: none;
+}
+
+.ui-input-checkbox {
+	position: relative;
+	// height: $checkbox-height;
+	// margin: 0 $document-padding;
+	margin-bottom: $default-spacing;
+
+	input {
+		@include touchable(10px);
+		position: absolute;
+		opacity: 0;
+		width: $checkbox-width;
+		height: $checkbox-width;
+	}
+
+	& > label {
+		@extend %label-text-style;
+		@extend %checkbox;
+
+		display: block;
+		// display: flex
+		// align-items: center;
+		// height: $checkbox-height;
+		line-height: $medium-font-size;
+		margin-right: 2 * $checkbox-width;
+
+		span.label-heading {
+			@extend %default-text-style;
+			font-weight: $medium-weight;
+			display: block;
+			margin-bottom: $tiny-spacing;
+		}
+	}
+
+	// Link
+	& > label .link {
+		@include touchable(10px);
+		@extend %link-text-style;
+		position: relative;
+		margin-left: 3px;
+	}
+
+	&.active {
+		& > label {
+			@extend %active-checkbox;
+
+			// Spunta del checkbox
+			// &::after {
+			// 	display: block;
+			// 	transform: rotate(45deg) scale(1);
+			// 	transition-timing-function: ease-in;
+			// }
+		}
+	}
+
+	&.disabled {
+		& > label {
+			@extend %disabled-checkbox;
+		}
+	}
+
+	// Errori form
+	.ui-input-invalid:not(:empty) {
+		@extend %invalid-text-style;
+		margin-top: 5px;
+	}
+	& > label.ui-form-label-invalid {
+		&::before {
+			border: 1.5px solid $error-text-color;
+			// border-color: $error-text-color;
+		}
+	}
+}

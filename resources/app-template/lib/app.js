@@ -1,13 +1,18 @@
-// Utils
 import _ from 'underscore';
+
+// Globals
+global.env = _.extend({}, require('../config.json'));
+global.env.APP_ENV = global.env.env;
+
+
+// Utils
 import Backbone from 'backbone';
 import {
 	l,
 	Application,
-	GeolocationPlugin
+	BackButton,
+	Dialogs
 } from './utils';
-
-
 
 // Controllers
 import PagesController from './controllers/PagesController';
@@ -16,7 +21,10 @@ import PagesController from './controllers/PagesController';
 import ComponentsController from './controllers/ComponentsController';
 
 // Views
-// import TabView from './views/components/TabView';
+import TabView from './views/components/TabView';
+import {
+	PageView
+} from 'backbone.uikit';
 
 // Middlewares
 import * as middlewares from './middlewares';
@@ -28,41 +36,31 @@ class App extends Application {
 	//
 
 	onBeforeBoot(context, page) {
-		// Before boot
+		// Override AJAX function
+		// Backbone.ajax = myAjax;
 	}
 
-	onInstallLibraries(context, page){
+	onInstallLibraries(context, page) {
 		// Add external library
 		page.use(middlewares.countryDetector());
 		page.use(middlewares.languageDetector());
-		page.use(GeolocationPlugin.middleware());
-		// Registro i metodi per la geolocaizzazione
-		page.use((context, next) => {
-			// Prompt native geolocation
-			context.geolocation.register(GeolocationPlugin.METHOD_TYPE_PROMPT_NATIVE_REQUEST, (err, granted) => {
-				if (err || !granted) {
-					context.geolocation.disable();
-					return;
-				}
-				context.geolocation.enable();
-			});
-
-			// Check if the user permission is changed since the last boot
-			context.geolocation.register(GeolocationPlugin.METHOD_TYPE_CHECK_STATUS, (err, granted) => {
-				if (!err && _.isObject(granted)) {
-					if (granted.enabled && granted.available && granted.authorized) {
-						context.geolocation.enable();
-					} else {
-						context.geolocation.disable();
-					}
-				}
-			});
-
-			return next();
-		});
+		page.use(Dialogs.middleware());
+		page.use(BackButton.middleware());
 	}
 
 	onAfterBoot(context, page) {
+		// Global settings
+		page.use((context, next) => {
+			// UI kit global configuration
+			context.uikit = {
+				PageView: {
+					pageAnimation: context.device.isAndroid() || context.device.isBrowser() ? PageView.ANIMATION_FADE_UP : PageView.ANIMATION_PUSH_LEFT,
+					duration: context.device.isAndroid() || context.device.isBrowser() ? 200 : 300
+				}
+			};
+			return next();
+		});
+
 		// Global events
 		page.use((context, next) => {
 
@@ -83,24 +81,26 @@ class App extends Application {
 
 			return next();
 		});
+
+		// Pages
+		page.use(ComponentsController.initializeStaticViewMiddleware);
+		page.use(this.tabsMiddleware);
+		page.use(this.initStackMiddleware);
 	}
 
 	onReady(context, page) {
 
-		// Adding all routes
-		page.url('*',
-			ComponentsController.initializeStaticViewMiddleware,
-			// this.tabsMiddleware,
-			this.initStackMiddleware,
-			// Add fetch middlewares here
+		// Called at every route
+		page.url('*', 
+			this.checkForRedirectMiddleware
 		);
 
+		// First route
 		page.url('', this.navigate('home', { trigger: true }));
 
 		page.url('home',
-			// this.clearTab('home'),
-			// this.navigateTab('home'),
-			PagesController.openHomeMiddleware,
+			this.clearTab('home'),
+			this.navigateTab('home'),
 			this.removeBootPlaceholder()
 		);
 
@@ -117,7 +117,7 @@ class App extends Application {
 		// context.firebaseAnalytics.trackLogin(user);
 
 		// Push notification
-		// context.pushNotification.sendTags("email", getCustomerEmail(true) );
+		// context.pushNotification.sendTags('email', getCustomerEmail(true));
 	}
 
 	/**
@@ -131,7 +131,7 @@ class App extends Application {
 		// context.firebaseAnalytics.trackLogout();
 
 		// Push notification
-		// context.pushNotification.deleteTags("email");
+		// context.pushNotification.deleteTags('email');
 	}
 
 	//
@@ -162,6 +162,25 @@ class App extends Application {
 		return next();
 	}
 
+	/**
+	 * Redirect forzato all'avvio dell'app
+	 * @version 1.0.0
+	 * @public
+	 * @return {Function} - Middleware
+	 */
+	checkForRedirectMiddleware(context, next) {
+		let forceRedirect = context.cache.get('forceRedirect');
+		if (forceRedirect) {
+			context.cache.set('forceRedirect', null);
+			setTimeout(() => {
+				context.page.navigate(forceRedirect, { trigger: true });
+			});
+			return;
+		}
+		context.cache.set('initialized', true);
+		return next();
+	}
+
 	//
 	// Tabs
 	//
@@ -173,35 +192,35 @@ class App extends Application {
 	 * @param {Object} context - Global context
 	 * @param {Function} next - Execute the next middleware
 	 */
-	// tabsMiddleware(context, next) {
-	// 	if (context.tabs) return next();
-	// 	let tabView = context.tabs = new TabView({
-	// 		navigation: false,
-	// 		tabs: [
-	// 			{
-	// 				route:        'home',
-	// 				action:       PagesController.openHomeMiddleware,
-	// 				label:        l('TAB_BAR->HOME'),
-	// 				icon:         'icon-home',
-	// 				masterDetail: false,
-	// 				visible:      true,
-	// 				analyticName: 'homepage'
-	// 			},
-	// 			{
-	// 				route:        'cart',
-	// 				action:       PagesController.openHomeMiddleware,
-	// 				label:        l('TAB_BAR->CART'),
-	// 				icon:         'icon-cart',
-	// 				badge:        10,
-	// 				masterDetail: false,
-	// 				visible:      true,
-	// 				analyticName: 'cart'
-	// 			}
-	// 		]
-	// 	});
-	// 	context.viewstack.pushView(tabView, { animated: false });
-	// 	return next();
-	// }
+	tabsMiddleware(context, next) {
+		if (context.tabs) return next();
+		let tabView = context.tabs = new TabView({
+			navigation: false,
+			tabs: [
+				{
+					route: 'home',
+					action: PagesController.openHomeMiddleware,
+					label: l('TAB_BAR->HOME'),
+					icon: 'icon-homepage',
+					masterDetail: false,
+					visible: true,
+					analyticName: 'homepage'
+				},
+				// {
+				// 	route: 'cart',
+				// 	action: PagesController.openHomeMiddleware,
+				// 	label: l('TAB_BAR->CART'),
+				// 	icon: 'icon-shop',
+				// 	badge: 10,
+				// 	masterDetail: false,
+				// 	visible: true,
+				// 	analyticName: 'cart'
+				// }
+			]
+		});
+		context.viewstack.pushView(tabView, { animated: false });
+		return next();
+	}
 
 	/**
 	 * Clear tab's viewstack
@@ -210,12 +229,12 @@ class App extends Application {
 	 * @param {String} tab - Tab name
 	 * @return {Function} - Middleware
 	 */
-	// clearTab(tab) {
-	// 	return (context, next) => {
-	// 		context.tabs.clear(tab);
-	// 		return next();
-	// 	};
-	// }
+	clearTab(tab) {
+		return (context, next) => {
+			context.tabs.clear(tab);
+			return next();
+		};
+	}
 
 	/**
 	 * Navigate to the specified tab
@@ -227,12 +246,12 @@ class App extends Application {
 	 * @param {Boolean} [options.changeStatus] - Default false. If true triggers the chageStatus method
 	 * @return {Function} - Middleware
 	 */
-	// navigateTab(tab, options) {
-	// 	return (context, next) => {
-	// 		context.tabs.navigate(tab, options);
-	// 		return next();
-	// 	};
-	// }
+	navigateTab(tab, options) {
+		return (context, next) => {
+			context.tabs.navigate(tab, options);
+			return next();
+		};
+	}
 
 	/**
 	 * Navigate to the specified tab or uses the current tab if one is present
@@ -244,15 +263,83 @@ class App extends Application {
 	 * @param {Boolean} [options.changeStatus] - Default false. If true triggers the chageStatus method
 	 * @return {Function} - Middleware
 	 */
-	// navigateTabWhenRequired(tab, options) {
-	// 	return (context, next) => {
-	// 		if (!context.tabs.getActiveState()) {
-	// 			context.tabs.navigate(tab, options);
-	// 		}
-	// 		return next();
-	// 	};
-	// }
+	navigateTabWhenNeeded(tab, options) {
+		return (context, next) => {
+			if (!context.tabs.getActiveState()) {
+				context.tabs.navigate(tab, options);
+			}
+			return next();
+		};
+	}
 
 }
 
 let app = new App();
+
+/**
+ * Gestito da universal link, lasciare questo metodo per evitare un errore in console
+ * @version 1.0.0
+ * @param  {String} url
+ */
+let lastOpenedUrl;
+window.handleOpenURL = function handleOpenURL(url) {
+	url = _s.trim(url.toString());
+
+	let path;
+	let originalUrl = url;
+
+	const execute = () => {
+		if (context.cache.get('initialized')) {
+			context.page.navigate(url, { trigger: true });
+		} else {
+			context.cache.set('forceRedirect', url);
+		}
+	};
+
+	// Block reopening the same link for 5 seconds. 
+	// It prevents an issue on iOS that could trigger multiple events
+	// if the user put the app in background and foreground after
+	// a deeplink/universal link navigation
+	if (lastOpenedUrl == url) return;
+	lastOpenedUrl = url;
+	setTimeout(() => {
+		lastOpenedUrl = null;
+	}, 5000);
+
+	setTimeout(() => {
+
+		// Deeplink detection
+		if (url.indexOf(global.env.DEEPLINK + '://') == 0) {
+			url = url.replace(global.env.DEEPLINK + '://', '');
+			return execute();
+		}
+
+		// Universal link
+		if (url.indexOf('http') == 0) {
+			// AdWords campaigns detect
+			let u = URI(url);
+			let data = u.search(true);
+			let analyticsCampaign = {};
+			let otherParams = {};
+			_(data).each((value, key) => {
+				if (_.isString(key) && key.indexOf('itm_') == 0) {
+					analyticsCampaign[key] = value;
+				} else {
+					otherParams[key] = value;
+				}
+			});
+			u.search(otherParams);
+			url = u.toString();
+
+			// 
+			let host = `${u.protocol()}://${u.hostname()}`;
+			path = _s.ltrim(_s.rtrim(url.replace(host, ''), '/'), '/');
+			url = path;
+			url = url.replace('/#', '');
+
+			context.cache.set('analyticsCustomCampaign', analyticsCampaign);
+
+			execute();
+		}
+	}, 1000);
+}

@@ -43,6 +43,7 @@ export default class Application {
 		};
 
 		this.page = new Page();
+		this.page.on('error', _.bind(this.onPageError, this));
 		this.boot();
 	}
 
@@ -53,18 +54,10 @@ export default class Application {
 		// Backbone
 		Backbone.$ = $;
 
-		// Globals
-		global.env = {};
-		let config = require('../../config.json');
-		for (let key in config) {
-			global.env[key] = config[key];
-		}
-		global.env.APP_ENV = global.env.env;
-
 		// Imposto le informazioni base di default
-		this.info.manufator   = config['author'];
-		this.info.description = config['description'];
-		this.info.version     = config['version']||'';
+		this.info.manufator   = global.env['author'];
+		this.info.description = global.env['description'];
+		this.info.version     = global.env['version']||'';
 
 		// Dev mode
 		if (global.env.env === 'development') {
@@ -87,7 +80,7 @@ export default class Application {
 		page.use(PubSub.middleware());
 		page.use(Settings.middleware());
 		page.use(Network.middleware({ backbone: Backbone }));
-		page.use(Viewstack.middleware({ el: this.options.applicationElement }));
+		page.use(Viewstack.middleware({ el: this.options.applicationElement, context }));
 		page.use((context, next) => {
 			let state = context.state = new State();
 			state.set('viewstack', context.viewstack);
@@ -196,13 +189,13 @@ export default class Application {
 		});
 
 		// Lockscreen
-		page.use((context, next)=>{
+		page.use((context, next) => {
 
-			if ( window.screen &&  window.screen.lockOrientation ){
-				if ( context.device.isAndroid() ){
-					if ( context.device.isTablet() ){
+			if (window.screen &&  window.screen.lockOrientation) {
+				if (context.device.isAndroid()) {
+					if (context.device.isTablet()) {
 						window.screen.unlockOrientation();
-					}else if (this.options.lockAndroidOrientation) {
+					} else if (this.options.lockAndroidOrientation) {
 						context.cache.set('lockOrientation', 'portrait');
 						window.screen.lockOrientation('portrait');
 					}
@@ -270,7 +263,7 @@ export default class Application {
 		this.onReady(context, page);
 
 		// Start the app
-		page.start();
+		page.start(this.options.pushState);
 	}
 
 	onBeforeBoot(context, page) {}
@@ -279,6 +272,7 @@ export default class Application {
 	onReady(context, page) {}
 	onPause(context) {}
 	onResume(context) {}
+	onPageError(err, conext) {}
 
 	navigate(url, options) {
 		return (context, next) => {

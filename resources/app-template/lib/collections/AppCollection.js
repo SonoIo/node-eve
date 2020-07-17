@@ -1,37 +1,123 @@
-var async    = require('async');
-var _        = require('underscore');
-var Backbone = require('backbone');
+import _ from "underscore";
+import { Model, Collection } from "backbone";
 
+// ***** NOTA *****
+//
+// è possibile fare il mock di una collection sovrascrivendo sync
+//
+// 	sync(method, collection, options) {
+//
+// 		if (method !== 'read') return super.sync(method, collection, options);
+//
+// 		const dummy = [
+// 			{id: '000', name: "Primo Prodotto"},
+// 			{id: '111', name: "Secondo Prodotto"},
+// 			{id: '222', name: "Terzo Prodotto"},
+// 			{id: '333', name: "Quarto Prodotto"},
+// 			{id: '444', name: "Quinto Prodotto"},
+// 			{id: '555', name: "Sesto Prodotto"},
+// 		];
+//
+// 		setTimeout(() => {
+// 			this.trigger('request', collection, {}, options);
+// 			options.success(dummy);
+// 		}, 1000);
+//
+// 	}
 
-var AppCollection = module.exports = Backbone.Collection.extend({
-	idAttribute: '_id',
-	serverUrl: env.SERVER_URL,
-	database: env.DATABASE,
-	_comparatorType: null,
-	fetching: false,
+/**
+ * Rappresenta la classe base di tutte le collection
+ * @version 1.0.0
+ */
+export default class AppCollection extends Collection {
 
-	refs: null,
-
-	initialize: function initialize() {
-		AppCollection.__super__.initialize.apply(this, arguments);
+	constructor(models, options){
+		super(models, options);
+		this.options = _.defaults(options || {}, {
+			currentPageName: null,
+			pageSizeName: null,
+			startPage: 0,
+			pageSize: 20
+		});
 		this.previousFetchData = {};
-		this.moreToLoad        = true;
-	},
+		this.moreToLoad = true;
+		this.fetched = false;
 
-	// Quando un model viene aggiunto ad una collection allora aggiorna
-	// le dipendenze del model in modo che sia in grado di aggiornarsi
-	// anche quando le sue dipendenze cambiano
-	// _addReference: function(model, options) {
-	// 	AppCollection.__super__._addReference.apply(this, arguments);
-	// 	model.listenToRefs();
-	// },
-	// _removeReference: function(model, options) {
-	// 	AppCollection.__super__._removeReference.apply(this, arguments);
-	// 	model.stopListeningToRefs();
-	// },
+		if (this.onInit) this.onInit();
+	}
 
-	// Carica elementi dal server un po' alla volta
-	loadMore: function loadMore(options, done) {
+	fetch(options) {
+		options || (options = {});
+
+		if (!options || !options.loadMore) {
+			this.moreToLoad = true;
+		}
+
+		let data = options.data || {};
+		this.previousFetchData = _.clone(data);
+
+		// Rinomina i campi usati per la paginazione da quelli standard
+		// a quelli usati dai servizi veri e propri.
+		if ( this.options.currentPageName && this.options.currentPageName != 'currentPage'  ) {
+			if ( 'currentPage' in data  ){
+				options.data[this.options.currentPageName] = data.currentPage;
+				delete options.data['currentPage'];
+			}else{
+				if (!options.data) options.data = {};
+				options.data[this.options.currentPageName] = this.options.startPage;
+			}
+		}
+		if ( this.options.pageSizeName ) {
+			if ('pageSize' in data && this.options.pageSizeName != 'pageSize') {
+				options.data[this.options.pageSizeName] = options.data.pageSize;
+				delete options.data['pageSize'];
+			} else if (!(options.data || {})[this.options.pageSizeName]) {
+				if (!options.data) options.data = {};
+				options.data[this.options.pageSizeName] = this.options.pageSize;
+			}
+		}
+
+		let success = options.success;
+		let error   = options.error;
+
+		options.success = (collection, resp, opt) => {
+			this.fetched    = true;
+			this.fetching   = false;
+			this.moreToLoad = options.data ? collection.size() == options.data[this.options.pageSizeName] : false;
+			if (success) success.call(options.context, collection, resp, opt);
+		};
+		options.error = (collection, resp, options) => {
+			this.fetching = false;
+			if (error) error.call(options.context, collection, resp, options);
+		};
+		this.fetching = true;
+		return unesSync(this, super.fetch, options);
+	}
+
+	/**
+	 * Indica se la collection è in fetching
+	 * @return {Boolen}
+	 */
+	isFetching() {
+		return !!this.fetching;
+	}
+
+	/**
+	 * Indica se la collection è stato fetchato
+	 * @return {Boolen}
+	 */
+	isFetched() {
+		return !!this.fetched;
+	}
+
+	/**
+	 * Carica altri model nella collection
+	 * @version 1.0.0
+	 * @param  {Object}   options opzioni per il caricamento dei modelli
+	 * @param  {Function} done    callback
+	 * @return {Object}           fetch result
+	 */
+	loadMore(options, done) {
 		if (!this.moreToLoad) {
 			_.defer(function () {
 				return done(null, false, 0);
@@ -39,20 +125,25 @@ var AppCollection = module.exports = Backbone.Collection.extend({
 			return;
 		}
 
-		if (!options)
+		if (typeof options === 'function') {
+			done = options;
 			options = {};
-		var self      = this;
-		var data      = _.defaults(options.data || {}, this.previousFetchData);
-		var oldLength = this.length;
-		var offset    = oldLength;
+		}
 
-		options.limit  = options.limit || 20;
+		if (!_.isObject(options))
+			options = {};
+
+		let data      = _.defaults(options.data || {}, this.previousFetchData);
+		let oldLength = this.length;
+		let offset    = oldLength;
+
+		options.limit  = options.limit || data[this.options.pageSizeName] || this.options.pageSize;
 		options.offset = offset;
 		options.remove = false;
 		options.add    = offset > 0;
 		options.reset  = offset === 0;
 
-		data.currentPage = Math.floor(offset/options.limit) + 1;
+		data.currentPage = this.options.startPage + Math.floor(offset/options.limit);
 		data.pageSize    = options.limit;
 
 		// Indica al fetch che questa chiamata è la continuazione
@@ -60,53 +151,33 @@ var AppCollection = module.exports = Backbone.Collection.extend({
 		options.loadMore = true;
 		options.data = data;
 
-		options.success = function(collection, response, opt) {
-			self.fetching = false;
+		options.success = (collection, response, opt) => {
+			this.fetching = false;
 			if (done) {
-				var moreToLoad = self.moreToLoad = collection.length - oldLength == options.limit;
+				let moreToLoad = this.moreToLoad = collection.length - oldLength == options.limit;
 				done(null, moreToLoad, collection.length - oldLength, oldLength);
 			}
 		};
-		options.error = function(collection, response, options) {
-			self.fetching = false;
+		options.error = (collection, response, options) => {
+			this.fetching = false;
 			if (done) done(new Error(response));
 		};
 
 		this.fetching = true;
-		this.fetch(options);
-	},
-
-	fetch: function fetch(options) {
-		if (!options.loadMore) {
-			this.moreToLoad = true;
-			this.previousFetchData = options ? options.data || {} : {};
-		}
-		if (global.env.APP_DEMO && options && options.data)
-			delete options.data;
-
-		if (options && options.data && options.data.currentPage)
-			options.data.currentPage--;
-
-		AppCollection.__super__.fetch.call(this, options);
-	},
-
-	fetchAll: function fetchAll(done) {
-		var self = this;
-		var canFetch = true;
-		self.reset();
-		async.whilst(
-			function () { return canFetch; },
-			function (next) {
-				self.loadMore({}, function (err, moreToLoad) {
-					if (err) return next(err);
-					canFetch = moreToLoad;
-					next();
-				});
-			},
-			function (err) {
-				return done(err);
-			}
-		);
+		return this.fetch(options);
 	}
 
-});
+	/**
+	 * Elabora la risposta del server
+	 * @param  {Object} response - Risposta del server
+	 * @param  {Object} options - Opzioni di backbone
+	 * @return {Object} - Attributi della risposta, errori o messaggi
+	 */
+	parse(response, options) {
+		if (this.onInit) this.onInit();
+		return response;
+	}
+
+}
+
+AppCollection.prototype.fetching = false;

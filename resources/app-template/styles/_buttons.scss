@@ -25,7 +25,7 @@
 %centered-button {
 	width: calc(100% - 55px * 2); // 55px + 20px = 75px
 	margin: auto;
-	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+	@include respond-to(mediumPhone) {
 		width: calc(100% - 20px * 2); // 20px + 20px = 40px
 	}
 }
@@ -56,14 +56,13 @@
 		white-space: nowrap;
 	}
 
-	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+	@include respond-to(mediumPhone) {
 		height: 41px;
 	}
 }
 
 // BUTTON TYPES
 
-// Bottone azione principale
 %primary-button, .primary-button {
 	@extend %button;
 	@extend %centered-button;
@@ -77,7 +76,7 @@
 	&.disabled, &.disabled.touch-active, &:disabled {
 		background-color: $medium-background-color;
 	}
-	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+	@include respond-to(mediumPhone) {
 		height: 41px;
 		line-height: 41px;
 	}
@@ -91,13 +90,12 @@
 	line-height: 36px;
 	// font-size: $small-button-font-size;
 	border-radius: $small-button-border-radius;
-	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+	@include respond-to(mediumPhone) {
 		height: 32px;
 		line-height: 32px;
 	}
 }
 
-// Bottone secondario
 %secondary-button, .secondary-button {
 	@extend %primary-button;
 	background-color: $hard-background-color;
@@ -115,7 +113,6 @@
 	}
 }
 
-// Bottone senza sfondo e senza bordi con il testo grande
 %clear-button, .clear-button {
 	@extend %button;
 	background-color: transparent;
@@ -127,19 +124,18 @@
 	&.disabled, &.disabled.touch-active, &:disabled {
 		color: $soft-text-color;
 	}
-	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+	@include respond-to(mediumPhone) {
 		height: 41px;
 		line-height: 41px;
 	}
 }
 
-//  Bottone senza sfondo e senza bordi con il testo piccolo
 %small-clear-button, .small-clear-button {
 	@extend %clear-button;
 	@extend %small-button-text-style;
 	text-transform: none;
 
-	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+	@include respond-to(mediumPhone) {
 		height: 36px;
 		line-height: 36px;
 	}
@@ -168,7 +164,6 @@
 	}
 }
 
-// Box button
 %box-button, .box-button {
 	@extend %button;
 	@extend %extra-big-button-text-style;
@@ -205,8 +200,6 @@
 	padding: 0;
 }
 
-
-// Bottone facebook social login
 .facebook-button {
 	@extend %social-login-button;
 	max-width: 100%;
@@ -224,7 +217,7 @@
 		background-image: url("../img/facebook-logo-white.svg");
 		background-size: 24px 24px;
 
-		@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		@include respond-to(mediumPhone) {
 			height: 41px;
 		}
 	}
@@ -244,12 +237,10 @@
 	}
 }
 
-// Bottone twitter social login
 .twitter-button {
 	@extend %social-login-button;
 }
 
-// Bottone google social login
 .google-button {
 	@extend %social-login-button;
 	background-color: $google-background-color;
@@ -273,7 +264,7 @@
 		right: 9px;
 		height: 16px;
 		margin: auto;
-		font-family: "Roboto";
+		font-family: $text-font;
 		font-weight: 500;
 		font-size: 14px;
 		line-height: 14px;
@@ -285,7 +276,6 @@
 	}
 }
 
-// Separatore
 .separator {
 	width: 95px;
 	height: 1px;
@@ -295,8 +285,7 @@
 	margin-bottom: 20px;
 }
 
-%icon-button,
-.icon-button {
+%icon-button, .icon-button {
 	@extend %button;
 	@extend %icon-style;
 	position: relative;
@@ -323,8 +312,7 @@
 	}
 }
 
-%primary-icon-button,
-.primary-icon-button {
+%primary-icon-button, .primary-icon-button {
 	@extend %icon-button;
 	color: $primary-color;
 	&.touch-active {

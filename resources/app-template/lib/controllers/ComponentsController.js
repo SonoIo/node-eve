@@ -3,11 +3,11 @@ import context from "context-utils";
 export default class ComponentsController {
 
 	/**
-	 * Inizializza le view statiche che dovranno essere appese una sola volta nel DOM. Ad esempio: LoadingScreen, Notification Center, ecc ...
+	 * Initialize static views
 	 * @version 1.0.0
 	 * @public
-	 * @param {Object} context - Contesto globale dell'applicazione
-	 * @param {Function} next - Fa proseguire la middleware a quella succesiva
+	 * @param {Object} context
+	 * @param {Function} next
 	 */
 	static initializeStaticViewMiddleware(context, next) {
 

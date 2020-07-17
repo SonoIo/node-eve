@@ -15,4 +15,5 @@ commons.bundle.js.map
 npm-debug.log
 config-test.json
 config.json
+config-*.json
 localizations/output

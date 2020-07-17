@@ -1,0 +1,78 @@
+.ui-search-filter {
+	flex-grow: 1;
+	padding: 0;
+
+	i.icon-search {
+		left: 0;
+	}
+
+	i.icon-photo {
+		// display: block;
+		left: auto;
+		right: 0;
+		height: $box-text-field-height;
+		width: $box-text-field-height;
+		line-height: $box-text-field-height;
+		color: $primary-color;
+	}
+	&.barcode {
+		i.barcode {
+			display: block !important;
+			right: 0;
+			left: auto;
+			font-size: 24px;
+			width: 27px;
+			// line-height: $top-bar-height;
+			// height: $top-bar-height;
+			color: $text-color;
+		}
+
+		.input {
+			transform: none;
+			width: 100%;
+		}
+	}
+
+	.input {
+		margin: 0;
+		background-color: rgba($medium-background-color, 0.1);
+		line-height: $button-height;
+		border-radius: $border-radius;
+	}
+	.input input {
+		background-color: transparent;
+		margin-left: 0;
+		padding-left: $default-spacing;
+		padding-right: $default-spacing;
+		text-align: left;
+		width: calc(100% - (#{$default-spacing} * 2));
+	}
+	.cancel {
+		display: none;
+		// @extend %cancel-button-text-style;
+		// text-transform: uppercase;
+		// font-size: $default-font-size !important;
+		right: $button-width; // $small-spacing;
+		line-height: $button-height;
+	}
+	.clear {
+		top: 0;
+		right: $default-spacing;
+		height: $button-height;
+		line-height: $button-height;
+		color: $medium-background-color;
+		background: none;
+	}
+	.clear:before {
+		font-size: $default-font-size;
+	}
+	.clear:after {
+		// content: none;
+	}
+
+	&.ui-search-active {
+		.input {
+			width: 100%;
+		}
+	}
+}

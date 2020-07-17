@@ -5,14 +5,11 @@
 @import 'fonts';
 
 // Font
-// @import url("../fonts/roboto.css");
-// @import url("../fonts/robotoslab.css");
-// @import url("../fonts/robotocondensed.css");
+@import url('../fonts/roboto/stylesheet.css');
+@import url('../fonts/icons/style.css');
 
 // Vendor
 @import 'bower_components/backbone.uikit/styles/style.scss';
-@import 'vendor/normalize';
-@import 'vendor/grid';
 
 // Tema
 @import 'theme';
@@ -20,8 +17,23 @@
 // Bottoni
 @import 'buttons';
 
-// Animations
+// Custom animations
 // @import 'animations/fadeOutDown';
 
-// Partials
-// @import 'partials/base';
+// Components
+@import 'partials/components/loading_screen';
+@import 'partials/components/tab';
+
+// Pages
+@import 'partials/pages/home';
+
+// UI kit
+@import 'partials/uikit/page';
+@import 'partials/uikit/modal';
+@import 'partials/uikit/navigation_modal';
+@import 'partials/uikit/text_field';
+@import 'partials/uikit/select_field';
+@import 'partials/uikit/search_filter';
+@import 'partials/uikit/checkbox_field';
+
+

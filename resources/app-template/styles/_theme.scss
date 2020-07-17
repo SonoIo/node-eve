@@ -1,20 +1,10 @@
-:root {
-	--notch-inset-top: 0px;
-	--notch-inset-right: 0px;
-	--notch-inset-bottom: 0px;
-	--notch-inset-left: 0px;
-}
 
 body, html {
-	height: 100%;
 	overflow: hidden;
+	height: 100%;
 	@extend %default-text-style;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
-}
-
-.viewstack {
-	@extend %fitContainer;
 }
 
 #application {
@@ -22,41 +12,11 @@ body, html {
 	overflow: hidden;
 }
 
-.iphone #application,
-.ipad #application {
-}
-
-html.iphone body,
-html.ipad body {
-}
-
-html.android body {
-	#application {
-		// padding-top: var(--notch-inset-top);
-	}
+.viewstack {
+	@extend %fitContainer;
 }
 
 i[class^="icon-"],
 i[class*=" icon-"] {
 	@extend %icon-style;
 }
-
-// .overflow-scroll::-webkit-scrollbar {
-// 	-webkit-appearance: none;
-// 	appearance: none;
-// 	width: 0px !important;
-// 	background: transparent !important;
-// 	display: none;
-// }
-// .overflow-scroll::-webkit-scrollbar-track {
-// 	-webkit-appearance: none;
-// 	appearance: none;
-// 	background: transparent !important;
-// 	display: none;
-// }
-// .overflow-scroll::-webkit-scrollbar-thumb {
-// 	-webkit-appearance: none;
-// 	appearance: none;
-// 	background: transparent !important;
-// 	display: none;
-// }

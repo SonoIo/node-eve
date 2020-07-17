@@ -1,0 +1,48 @@
+.ui-page {
+	@extend %fitContainer;
+
+	top: 0;
+	bottom: $tab-height;
+	@include at-root('.iphone-x') {
+		bottom: $tab-height + $ios-iphone-x-margin-bottom;
+	}
+
+	.content-page {
+		@extend %fitContainer;
+		padding-left: $document-padding;
+		padding-right: $document-padding;
+		z-index: 0;
+
+		@include at-root('.iphone') {
+			padding-top: $ios-status-bar-height;
+		}
+		@include at-root('.ipad') {
+			padding-top: $ios-status-bar-height;
+		}
+		@include at-root('.iphone-x') {
+			padding-top: $ios-iphone-x-status-bar-height;
+		}
+
+		@include respond-to('tablet') {
+			margin: 0 20%;
+		}
+		@include respond-to('landscapeTablet') {
+			margin: 0 25%;
+		}
+		@include respond-to-desktop('desktop') {
+			margin: 0 auto;
+			max-width: 800px;
+		}
+	}
+
+	&.hide-tab-bar {
+		bottom: 0;
+		.content-page, .ui-list-view {
+			padding-bottom: $tab-height;
+			@include at-root('.iphone-x') {
+				padding-bottom: $tab-height + $ios-iphone-x-margin-bottom;
+			}
+		}
+	}
+
+}

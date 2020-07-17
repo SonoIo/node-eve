@@ -42,15 +42,15 @@ export function countryDetector() {
 
 /**
  * Riceve dal dispositivo le impostazioni sulla lingua. Se non è presente nei
- * dizionari allora utilizza DEFAULT_LANGUAGE.
+ * dizionari allora utilizza DEFAULT_LOCALE.
  * @version 1.0.0
  */
 export function languageDetector() {
 	return (context, next) => {
 		if (!window.navigator || !window.navigator.globalization) {
-			context.cache.set('language', global.env.DEFAULT_LANGUAGE);
+			context.cache.set('language', global.env.DEFAULT_LOCALE);
 			context.locale = context.cache.get('language');
-			moment.locale(global.env.DEFAULT_LANGUAGE + '-' + global.env.DEFAULT_COUNTRY_CODE);
+			moment.locale(global.env.DEFAULT_LOCALE + '-' + global.env.DEFAULT_COUNTRY_CODE);
 			return next();
 		}
 		window.navigator.globalization.getPreferredLanguage((detectedLanguage) => { // { value: 'it-IT' }

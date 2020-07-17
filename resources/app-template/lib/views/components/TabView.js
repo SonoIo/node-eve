@@ -29,6 +29,8 @@ export default class TabView extends AppView {
 
 		// States
 		this.states = context.states = {};
+		this.tabOptions = {};
+		this.tabActions = {};
 		var aState, aViewstack, aNavigation;
 
 		let events = {};
@@ -36,10 +38,15 @@ export default class TabView extends AppView {
 		const NavigationClass   = this.options.navigationClass;
 		this.options.tabs.forEach(tab => {
 			// console.log( tab );
-			aState     = this.states[tab.route] = new State();
-			aViewstack = new Viewstack({
-				className: 'viewstack'
-			});
+			if (!tab.virtual) {
+				aState     = this.states[tab.route] = new State();
+				aViewstack = new Viewstack({
+					className: 'viewstack'
+				});
+			} else {
+				aState     = this.states[tab.route] = context.state;
+				aViewstack = context.state.get('viewstack');
+			}
 
 			if ( navigationEnabled ){
 				aNavigation = new NavigationClass({
@@ -50,9 +57,10 @@ export default class TabView extends AppView {
 				aState.set('navigation', aNavigation);
 			}
 
+			this.tabOptions[tab.route] = tab;
+			this.tabActions[tab.route] = tab.action;
+
 			aState.set('viewstack', aViewstack);
-			aState.set('tabAction', tab.action);
-			aState.set('tabOptions', tab);
 			this.listenTo(aViewstack, 'pushed popped clear', this.showTabBar);
 		});
 
@@ -111,7 +119,7 @@ export default class TabView extends AppView {
 				}
 
 				if ( tab.label ){
-					$aButton.append( $('<span class="tab-bar-toolbar-button-label" />').text( tab.label ) );
+					$aButton.append( $('<span class="tab-bar-toolbar-button-label" />').html( tab.label ) );
 				}
 
 				if ( _.result(tab,'visible') ){
@@ -124,11 +132,12 @@ export default class TabView extends AppView {
 				this.cache['$' + tab.route + 'Button'] = $aButton;
 				this.cache['$' + tab.route + 'Page']   = $aPage;
 
-				$tabBarContent.append( $aPage );
+				if (!tab.virtual) {
+					$tabBarContent.append( $aPage );
+					$aPage.append(aState.get('viewstack').el);
+				}
+
 				$tabBarToolbar.append( $aButton );
-
-
-				$aPage.append(aState.get('viewstack').el);
 
 				if ( this.options.navigation ){
 					$aPage.append(aState.get('navigation').el);
@@ -182,8 +191,20 @@ export default class TabView extends AppView {
 		return this.enableTab(tab, true, onlyButton);
 	}
 
+	showBarShadow() {
+		this.requestAnimationFrame(()=>{
+			this.el.classList.add('shadow');
+		});
+	}
+
+	hideBarShadow() {
+		this.requestAnimationFrame(()=>{
+			this.el.classList.remove('shadow');
+		});
+	}
+
 	/**
-	 * Visualizza / Nasconed una tab (bottone e pagina). In opzione si può visualizzare/nascondere il solo bottone
+	 * Visualizza / Nasconde una tab (bottone e pagina). In opzione si può visualizzare/nascondere il solo bottone
 	 * @version 1.0.0
 	 * @public
 	 * @param {String} tab - Chiave che identifica la Tab
@@ -365,11 +386,19 @@ export default class TabView extends AppView {
 		let state      = this.states[newTab];
 		let viewstack  = state.get('viewstack');
 		let navigation = state.get('navigation');
-		let tabOptions = state.get('tabOptions');
+		let tabOptions = this.tabOptions[newTab];
 
 		let prevTab    = this._activeTab;
 		let prevState;
 		let prevView;
+
+		if (tabOptions.virtual) {
+			let fn = this.tabActions[newTab];
+			if (_.isFunction(fn)) {
+				fn(context, options, done);
+			}
+			return;
+		}
 
 		if ( !_.isEmpty(prevTab) ){
 			prevState  = this.states[prevTab];
@@ -385,7 +414,7 @@ export default class TabView extends AppView {
 		if (options.changeStatus === true)
 			options.changeStatus = context.params[0];
 
-		if (newTab == prevTab && !options.force ) {
+		if (newTab == prevTab && !options.force) {
 			// Lascio la prima view
 			this.clearChildViews(newTab);
 			changeStatus();
@@ -397,11 +426,12 @@ export default class TabView extends AppView {
 		this.trigger('navigate', state, viewstack.size() === 0 );
 
 		if (viewstack.size() === 0) {
-			let fn = state.get("tabAction");
+			let fn = this.tabActions[newTab];
 			if ( _.isFunction(fn) ){
 				fn(context, options, done);
 			}
-
+		} else if (tabOptions.clearOnNavigate) {
+			this.clearChildViews(newTab);
 		}
 
 		context.page.navigate(newTab, { trigger: false });
@@ -425,8 +455,8 @@ export default class TabView extends AppView {
 					let newPage = this.cache['$' + newTab + 'Page'].get(0);
 
 					this.cache['$' + newTab + 'Button'].addClass('active'); // Attivo il bottone
-					newPage.style.display = 'block'; // Visualizzo la pagina
-					newPage.style.zIndex  = 10;
+					newPage.classList.remove('deactivate');
+					newPage.classList.add('active');
 
 					if (activeView && activeView.onNavigate) {
 						activeView.onNavigate();
@@ -440,8 +470,8 @@ export default class TabView extends AppView {
 						// Se la tab di apertura ha un tempo di apparizione la eseguo
 						if ( !tabOptions.timeOfAppearance || !_.isNumber(tabOptions.timeOfAppearance) || _.isNaN(tabOptions.timeOfAppearance) ){
 							this.cache['$' + prevTab + 'Button'].removeClass('active');
-							prevPage.style.display = 'none';
-							prevPage.style.zIndex  = 0;
+							prevPage.classList.add('deactivate');
+							prevPage.classList.remove('active');
 							if ( prevView && prevView.onDeactivate ) prevView.onDeactivate();
 						}else{
 							prevPage.style.zIndex = 0;
@@ -450,7 +480,8 @@ export default class TabView extends AppView {
 									this.cache.toHideTab = null;
 									this.requestAnimationFrame(() => {
 										this.cache['$' + prevTab + 'Button'].removeClass('active');
-										prevPage.style.display = 'none';
+										prevPage.classList.add('deactivate');
+										prevPage.classList.remove('active');
 										if ( prevView && prevView.onDeactivate ) prevView.onDeactivate();
 									});
 								}, tabOptions.timeOfAppearance);
@@ -499,6 +530,12 @@ export default class TabView extends AppView {
 			throw new Error('Cannot find state named "' + tab + '"');
 		let viewstack = state.get('viewstack');
 		viewstack.clearStack(1);
+	}
+
+	clearAll() {
+		_.forEach(this.states, (aState, aTabName) => {
+			this.clearChildViews(aTabName);
+		});
 	}
 
 	getButtonTab(tab){

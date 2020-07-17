@@ -1,0 +1,246 @@
+$text-field-height:           $button-height;
+$box-text-field-height:       $button-height;
+$small-box-text-field-height: 40px;
+$text-field-padding:          $default-spacing;
+$icon-text-field-height:      $box-text-field-height; // Altezza text box
+$icon-text-field-icon-area:   33px;                   // Larghezza area icona
+$icon-text-field-icon-width:  20px;                   // Larghezza icona
+
+//
+// INPUT TYPES
+//
+
+// Input text con placeholder interno e bordo inferiore (default)
+%default-input-text-field, .ui-input-text {
+	position: relative;
+
+	label {
+		@extend %label-text-style;
+		display: none;
+	}
+	input, select {
+		@extend %text-field-text-style;
+		width: 100%;
+		height: $text-field-height;
+		border: none;
+		border-bottom: 1px solid $border-color;
+		border-radius: 0; // lo forzo per annullare lo stile di default
+		box-sizing: border-box;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background-color: rgba($input-background-color, 0.1);
+
+		&[disabled] {
+			border-bottom: none;
+		}
+
+		&::placeholder {
+			@extend %placeholder-text-style;
+		}
+	}
+	textarea {
+		@extend %text-field-text-style;
+		width: 100%;
+		min-height: 100px;
+		border: none;
+		padding: $fine-spacing;
+		box-sizing: border-box;
+		-webkit-appearance: none;
+		appearance: none;
+		border-radius: 7px;
+		resize: none;
+
+		&.ui-form-invalid {
+			border: 1px solid $error-text-color;
+		}
+	}
+	// &.active {
+	// 	input {
+	// 		border-bottom: 1px solid $hard-text-color;
+	// 	}
+	// };
+	&:not(:last-of-type) {
+		margin-bottom: $small-spacing;
+		@media only screen and (min-height: 720px) { // large phones: iPhone X, Samsung Galaxy S10
+			margin-bottom: $default-spacing;
+		}
+	}
+	.ui-input-invalid:not(:empty) {
+		margin-top: $fine-spacing;
+		@extend %invalid-text-style;
+	}
+	input.ui-form-invalid, select.ui-form-invalid {
+		border: 1px solid $error-text-color !important;
+		// border-color: $error-text-color !important;
+	}
+}
+
+// Input text con label superiore, placeholder interno e bordo inferiore
+%label-text-field, .label-text-field {
+	label {
+		display: block;
+		color: $primary-color;
+	}
+}
+
+// Input text con riquadro e placeholder interno
+%box-text-field, .box-text-field {
+	@extend %default-input-text-field;
+
+	input, select {
+		// width: calc(100% - (2 * #{$document-padding}));
+		height: $box-text-field-height;
+		padding-left: $text-field-padding;
+		padding-right: $text-field-padding;
+		border: none;
+		border-radius: $border-radius;
+
+		&[disabled] {
+			@extend %disabled-text-field-text-style;
+		}
+		&::placeholder {
+			@extend %placeholder-text-style;
+		}
+	}
+
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		input, select {
+			height: $small-box-text-field-height;
+		}
+	}
+}
+
+// Input text con label superiore, riquadro e placeholder interno
+%label-box-text-field, .label-box-text-field {
+	@extend %box-text-field;
+
+	label {
+		display: block;
+		@extend %label-text-style;
+		margin-bottom: 10px;
+	}
+}
+
+// Input text con icona, riquadro e placeholder interno
+%icon-text-field, .icon-text-field {
+	@extend %box-text-field;
+
+	&:before {
+		position: absolute;
+		top: ($icon-text-field-height - $icon-font-size) / 2;
+		left: ($icon-text-field-icon-area - $icon-text-field-icon-width) / 2;
+		width: $icon-text-field-icon-width;
+		font-family: $icon-font;
+		font-size: $icon-font-size;
+		color: $primary-color;
+	}
+
+	input {
+		height: $icon-text-field-height;
+		padding-left: $icon-text-field-icon-area; // text-indent: $icon-text-field-icon-area;
+	}
+
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		&:before {
+			top: ($small-box-text-field-height - $icon-font-size) / 2;
+		}
+		input {
+			height: $small-box-text-field-height;
+		}
+	}
+}
+
+// Input text con label in linea a sinistra
+%inline-label-text-field, .inline-label-text-field {
+	// position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 $document-padding;
+
+	> label {
+		display: block;
+		flex-grow: 1;
+		white-space: nowrap; // force inline label
+	}
+	input {
+		width: auto;
+		flex-grow: 1;
+		border: none;
+		background-color: transparent;
+	}
+}
+
+// Input date con label in linea a sinistra e icona a destra
+%date-text-field, .date-text-field {
+	@extend %box-text-field;
+	margin: 0 $document-padding;
+	padding: 0 $text-field-padding;
+	padding-right: $icon-text-field-icon-width + $text-field-padding;
+	position: relative;
+	background-color: $background-color;
+	border-radius: $border-radius;
+
+	label {
+		@extend %placeholder-text-style;
+		display: inline;
+		position: absolute;
+		top: 0;
+		left: $text-field-padding;
+		line-height: $box-text-field-height;
+	}
+
+	input[type="date"] {
+		color: transparent;
+		text-shadow: none;
+		height: $box-text-field-height;
+		padding: 0;
+
+		&.ui-form-invalid {
+			border: none !important;
+
+			&:after {
+				@extend %fitContainer;
+				content: '';
+				border: 1px solid $error-text-color !important;
+				z-index: 1;
+				border-radius: $border-radius;
+			}
+		}
+	}
+
+	&.active, &.filled {
+		label {
+			display: none;
+		}
+		input[type="date"] {
+			color: inherit;
+			text-shadow: inherit;
+		}
+		input[type="date"]:disabled {
+			@extend %disabled-text-field-text-style;
+		}
+	}
+
+	&:after {
+		@extend %fitContainer;
+		@extend %icon-style;
+		content: '\e90a';
+		top: ($box-text-field-height - $icon-font-size) / 2;
+		left: auto;
+		right: $text-field-padding;
+		// width: $icon-text-field-icon-area;
+		width: $icon-text-field-icon-width;
+		color: $medium-text-color;
+		text-align: center;
+	}
+	@media only screen and (max-width: 320px) { // small phones: iPhone 4, iPhone 5/SE
+		input[type="date"] {
+			height: $small-box-text-field-height;
+		}
+		&:after {
+			top: ($small-box-text-field-height - $icon-font-size) / 2;
+		}
+	}
+}

@@ -1,0 +1,216 @@
+$loading-screen-background-color: rgba($important-background-color, 0.6) !default;
+$loading-screen-background-color-android: rgba($important-background-color, 0.9) !default;
+
+.loading-screen {
+	@extend %fullscreen;
+	z-index: 50000 !important;
+	-webkit-transform: translate3d(-3000px, 0, 100px);
+		transform: translate3d(-3000px, 0, 100px) ;
+
+	&.show {
+		-webkit-animation-duration: 300ms;
+			animation-duration: 300ms;
+
+		-webkit-animation-timing-function: ease-in;
+			animation-timing-function: ease-in;
+
+		-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+
+		-webkit-animation-name: showLoadingScreen;
+			animation-name: showLoadingScreen;
+	}
+	&.hide {
+		-webkit-animation-duration: 300ms;
+			animation-duration: 300ms;
+
+		-webkit-animation-timing-function: ease-out;
+			animation-timing-function: ease-out;
+
+		-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+
+		-webkit-animation-name: hideLoadingScreen;
+			animation-name: hideLoadingScreen;
+
+	}
+
+	&:not(.show) {
+		.content-inner {
+			display: none;
+		}
+	}
+
+	.content-inner {
+		width: 100%;
+	}
+
+	.content {
+		@extend %fitContainer;
+
+		background-color: $loading-screen-background-color;
+		min-height: 1px;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		@include at-root('.iphone') {
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+		}
+		@include at-root('.ipad') {
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+		}
+		@include at-root('.android') {
+			background-color: $loading-screen-background-color-android;
+		}
+
+		.template-hidden {
+			opacity: 0;
+		}
+		.loading {}
+		.success {}
+		.error {}
+		.message {}
+	}
+
+	.loading-screen-slide {
+
+		@extend %loading-text-style;
+		text-align: center;
+
+		&.active {
+			padding: 35px 0;
+		}
+		&:not(.active) {
+			display: none;
+		}
+		.image {
+
+		}
+		.text {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.vignette {
+			position: relative;
+			display: inline-block;
+			background-size: cover;
+			&::after {
+				content: '';
+				position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+				background-image: radial-gradient(transparent, $negate-background-color);
+			}
+			img {
+				height: 200px;
+				display: block;
+				visibility: hidden;
+			}
+			margin-bottom: 50px;
+		}
+		&:nth-child(1) .vignette { background-image: url("../img/onboarding/1.svg"); }
+		&:nth-child(2) .vignette { background-image: url("../img/onboarding/2.svg"); }
+		&:nth-child(3) .vignette { background-image: url("../img/onboarding/3.svg"); }
+		&:nth-child(4) .vignette { background-image: url("../img/onboarding/4.svg"); }
+		&:nth-child(5) .vignette { background-image: url("../img/onboarding/5.svg"); }
+		&:nth-child(6) .vignette { background-image: url("../img/onboarding/6.svg"); }
+		&:nth-child(7) .vignette { background-image: url("../img/onboarding/7.svg"); }
+		&:nth-child(8) .vignette { background-image: url("../img/onboarding/8.svg"); }
+	}
+
+	.spinner-container {
+		height: 62px;
+		margin-bottom: 15px;
+	}
+
+	.spinner-text {
+		color: $negate-text-color;
+		text-align: center;
+		margin-bottom: 60px;
+	}
+
+	.spinner,
+	.spinner-bg {
+		-webkit-transform: scale(1.5, 1.5);
+		transform: scale(1.5, 1.5);
+		position: absolute;
+		left: 50%;
+		margin-left: -25px;
+		width: 50px;
+		height: 50px;
+		& .path {
+			stroke: $negate-text-color;
+			stroke-linecap: round;
+		}
+	}
+
+	.spinner {
+		& .path {
+			animation: dash 1.5s ease-in-out infinite;
+		}
+	}
+
+	.spinner-bg {
+		& .path {
+			opacity: 0.3;
+		}
+	}
+
+}
+
+@include keyframe('showLoadingScreen') {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+	}
+
+	100% {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+	}
+}
+
+@include keyframe('hideLoadingScreen') {
+	0% {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+
+	99% {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+
+	100% {
+		opacity: 0;
+		-webkit-transform: translate3d(-3000px, 0, 0);
+		transform: translate3d(-3000px, 0, 0);
+	}
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg) scale(1.5, 1.5);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

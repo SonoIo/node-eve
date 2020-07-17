@@ -1,5 +1,0 @@
-{
-    "env": "production",
-	"DEFAULT_LOCALE": "en",
-	"DEFAULT_COUNTRY_CODE": "UK"
-}

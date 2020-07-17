@@ -1,0 +1,43 @@
+.ui-navigation-modal {
+	& > .overlay {
+		@include animation(fadeIn, $animation-duration, ease-out, null, both);
+	}
+	& > .container {
+		@include animation(slideInBottom, $animation-duration, ease-out, null, backwards);
+		background-color: $background-color;
+		pointer-events: initial;
+
+		& > .content {
+			bottom: 0;
+		}
+	}
+
+	&.pop {
+		& > .overlay {
+			@include animation(fadeOut, $slow-animation-duration, ease-in, null, both);
+			animation-delay: $quick-animation-duration;
+		}
+		& > .container {
+			@include animation(slideOutBottom, $animation-duration, ease-in, null, forwards);
+		}
+	}
+
+	.ui-page {
+		top: 0 !important;
+		bottom: 0 !important;
+		@include at-root('.iphone') {
+			top: $ios-status-bar-height !important;
+		}
+		@include at-root('.ipad') {
+			top: $ios-status-bar-height !important;
+		}
+		@include at-root('.iphone-x') {
+			top: $ios-iphone-x-status-bar-height !important;
+			bottom: $ios-iphone-x-margin-bottom !important;
+		}
+
+		.content-page {
+			padding-top: 0;
+		}
+	}
+}
