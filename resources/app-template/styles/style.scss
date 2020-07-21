@@ -20,13 +20,6 @@
 // Custom animations
 // @import 'animations/fadeOutDown';
 
-// Components
-@import 'partials/components/loading_screen';
-@import 'partials/components/tab';
-
-// Pages
-@import 'partials/pages/home';
-
 // UI kit
 @import 'partials/uikit/page';
 @import 'partials/uikit/modal';
@@ -36,4 +29,9 @@
 @import 'partials/uikit/search_filter';
 @import 'partials/uikit/checkbox_field';
 
+// Components
+@import 'partials/components/loading_screen';
+@import 'partials/components/tab';
 
+// Pages
+@import 'partials/pages/home';

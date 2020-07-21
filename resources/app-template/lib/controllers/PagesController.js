@@ -36,7 +36,7 @@ export default class PagesController {
 
 		const HomePage = require('../views/pages/HomePage').default;
 		const homeView = new HomePage(options);
-		viewstack.pushView(homeView, { animated: false });
+		viewstack.pushView(homeView, { animated: options.animated });
 	}
 
 	/**

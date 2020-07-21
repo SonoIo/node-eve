@@ -17,7 +17,9 @@
     "test": "eve test mocha",
     "play-loading": "eve test playground/loading"
   },
-  "dependencies": {},
+  "dependencies": {
+    "typy": "^3.3.0"
+  },
   "devDependencies": {
     "node-eve": "https://github.com/SonoIo/node-eve#master"
   },

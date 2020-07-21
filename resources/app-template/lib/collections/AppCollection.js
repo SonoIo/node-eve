@@ -91,7 +91,7 @@ export default class AppCollection extends Collection {
 			if (error) error.call(options.context, collection, resp, options);
 		};
 		this.fetching = true;
-		return unesSync(this, super.fetch, options);
+		return super.fetch(options);
 	}
 
 	/**

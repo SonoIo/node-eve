@@ -1,0 +1,37 @@
+
+@mixin safeare-top($base: 0px) {
+	@include at-root('.iphone') {
+		top: $base + $ios-status-bar-height;
+	}
+	@include at-root('.ipad') {
+		top: $base + $ios-status-bar-height;
+	}
+	@include at-root('.iphone-x') {
+		top: $base + $ios-iphone-x-status-bar-height;
+	}
+}
+
+@mixin safearea-bottom($base: 0px) {
+	@include at-root('.iphone-x') {
+		bottom: $base + $ios-iphone-x-margin-bottom;
+	}
+}
+
+@mixin safearea-padding-top($base: 0px) {
+	@include at-root('.iphone') {
+		padding-top: $base + $ios-status-bar-height;
+	}
+	@include at-root('.ipad') {
+		padding-top: $base + $ios-status-bar-height;
+	}
+	@include at-root('.iphone-x') {
+		padding-top: $base + $ios-iphone-x-status-bar-height;
+	}
+}
+
+@mixin safearea-padding-bottom($base: 0px) {
+	@include at-root('.iphone-x') {
+		padding-bottom: $base + $ios-iphone-x-margin-bottom;
+	}
+}
+
