@@ -7,6 +7,7 @@ bower_components
 .components.bundle.js.map
 .everc
 style.css
+!resources/app-template/build/assets/fonts/icons/style.css
 style.css.map
 bundle.js
 bundle.js.map
