@@ -62,7 +62,7 @@
     "node-watch": "^0.6.3",
     "optimize-js": "^1.0.3",
     "realpathify": "^1.0.1",
-    "uglify-js": "^3.9.4",
+    "terser": "^5.3.3",
     "underscore": "^1.9.1",
     "underscore.string": "^3.3.5",
     "watchify": "^3.11.1"
