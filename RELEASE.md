@@ -1,5 +1,11 @@
 # Release notes
 
+## 3.1.0
+- New minify library that supports ES6+: [Terser](https://github.com/terser/terser).
+- Fix an issue that keeps the debug options to true with build dist.
+
+**Attention!** the supported min version is iOS 10.0 and Android 5.0 for a full support. See [Can I use](https://caniuse.com/const) for more info.
+
 ## 3.0.0
 - Babel 7
   - [@babel/plugin-proposal-class-properties](https://babeljs.io/docs/en/babel-plugin-proposal-class-properties)
