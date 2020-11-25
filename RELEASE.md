@@ -1,5 +1,8 @@
 # Release notes
 
+## 3.1.1
+- Added parameter `--exorcist` to `eve test` command.
+
 ## 3.1.0
 - New minify library that supports ES6+: [Terser](https://github.com/terser/terser).
 - Fix an issue that keeps the debug options to true with build dist.
