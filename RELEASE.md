@@ -1,5 +1,9 @@
 # Release notes
 
+## 3.1.2
+- Configure SCSS watch directory through `eve-watchify.directories`. If defined as an array of directory in your project package.json,
+it will start watching it for changes and rebuild the CSS accordingly.
+
 ## 3.1.1
 - Added parameter `--exorcist` to `eve test` command.
 
