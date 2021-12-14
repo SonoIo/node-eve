@@ -1,6 +1,6 @@
 {
   "name": "node-eve",
-  "version": "3.1.2",
+  "version": "3.1.3",
   "description": "Eve command line tools for browserify projects",
   "bin": {
     "eve": "./lib/eve.js"
@@ -38,6 +38,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
     "@babel/plugin-proposal-optional-chaining": "^7.10.1",
     "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/plugin-transform-strict-mode": "^7.12.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/runtime": "^7.10.2",
     "async": "^2.3.0",
@@ -47,6 +48,7 @@
     "browserify-shim": "^3.8.14",
     "colors": "^1.3.3",
     "commander": "^3.0.1",
+    "core-js": "^3.8.2",
     "debowerify": "^1.5.0",
     "exorcist": "^1.0.1",
     "express": "^4.17.1",
