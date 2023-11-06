@@ -1,5 +1,8 @@
 # Release notes
 
+## 3.2.0
+- Added support to Node 18.x
+
 ## 3.1.3
 - Added support to old devices adding new build presets.
 
